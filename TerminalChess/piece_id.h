@@ -1,0 +1,53 @@
+#ifndef CHESS_PIECE_IDS_H
+#define CHESS_PIECE_IDS_H
+
+// --- Empty Square ---
+#define EMPTY_ID "EMP0"
+
+// --- White Pieces IDs ---
+#define PAWN01_WHITE_ID "WP01"
+#define PAWN02_WHITE_ID "WP02"
+#define PAWN03_WHITE_ID "WP03"
+#define PAWN04_WHITE_ID "WP04"
+#define PAWN05_WHITE_ID "WP05"
+#define PAWN06_WHITE_ID "WP06"
+#define PAWN07_WHITE_ID "WP07"
+#define PAWN08_WHITE_ID "WP08"
+
+#define ROOK01_WHITE_ID "WR01"
+#define ROOK02_WHITE_ID "WR02"
+
+#define KNIGHT01_WHITE_ID "WN01"
+#define KNIGHT02_WHITE_ID "WN02"
+
+#define BISHOP01_WHITE_ID "WB01"
+#define BISHOP02_WHITE_ID "WB02"
+
+#define QUEEN01_WHITE_ID "WQ01"
+#define KING01_WHITE_ID  "WK01"
+
+// --- Black Pieces IDs ---
+#define PAWN01_BLACK_ID "BP01"
+#define PAWN02_BLACK_ID "BP02"
+#define PAWN03_BLACK_ID "BP03"
+#define PAWN04_BLACK_ID "BP04"
+#define PAWN05_BLACK_ID "BP05"
+#define PAWN06_BLACK_ID "BP06"
+#define PAWN07_BLACK_ID "BP07"
+#define PAWN08_BLACK_ID "BP08"
+
+#define ROOK01_BLACK_ID "BR01"
+#define ROOK02_BLACK_ID "BR02"
+
+#define KNIGHT01_BLACK_ID "BN01"
+#define KNIGHT02_BLACK_ID "BN02"
+
+#define BISHOP01_BLACK_ID "BB01"
+#define BISHOP02_BLACK_ID "BB02"
+
+#define QUEEN01_BLACK_ID "BQ01"
+#define KING01_BLACK_ID  "BK01"
+
+// void 
+
+#endif // CHESS_PIECE_IDS_H

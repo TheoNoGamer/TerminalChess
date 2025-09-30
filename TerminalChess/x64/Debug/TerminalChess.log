@@ -1,0 +1,4 @@
+﻿  chessboard_symbols.c
+C:\Users\theo.lidec\source\repos\TerminalChess\TerminalChess\chessboard_symbols.c(1181,98): warning C4028: formal parameter 5 different from declaration
+C:\Users\theo.lidec\source\repos\TerminalChess\TerminalChess\chessboard_symbols.c(1181,120): warning C4028: formal parameter 6 different from declaration
+  TerminalChess.vcxproj -> C:\Users\theo.lidec\source\repos\TerminalChess\x64\Debug\TerminalChess.exe
