@@ -121,21 +121,54 @@ int main(void) {
 			print("\n"); 
 
 			if (user_turn_int == 1) { // If user01 turn
-				print("%s, it is your turn. ", user01_Name);
-				print("You are %s. ", user01_Color);
+				check_king_status();
+				if (king_true_int == 0) {
+					print("%s, it is your turn. ", user01_Name);
+					print("You are %s. ", user01_Color);
 
-				init_move_white();
-				user_turn_int = 2;
-				print("\n");
+					if (strcmp(user01_Color, "white") == 0) {
+						init_move_white();
+						user_turn_int = 2;
+					}
+					else if (strcmp(user01_Color, "black") == 0) {
+						init_move_black();
+						user_turn_int = 2;
+					}
+					print("\n");
+				}
+				else if (king_true_int == 1 && strcmp(user01_Color, "white") == 0) {
+					print("%s you winn", user02_Name);
+					wiktory = 1;
+				}
+				else if (king_true_int == 2 && strcmp(user01_Color, "black") == 0) {
+					print("%s you winn", user02_Name);
+					wiktory = 1;
+				}
 			}
 			else if (user_turn_int == 2) { // If user02 turn
-				print("%s, it is your turn. ", user02_Name);
-				print("You are %s. ", user02_Color);
+				check_king_status();
+				if (king_true_int == 0) {
+					print("%s, it is your turn. ", user02_Name);
+					print("You are %s. ", user02_Color);
 
-				init_move_white();
-				user_turn_int = 1;
-				print("\n");
-
+					if (strcmp(user02_Color, "white") == 0) {
+						init_move_white();
+						user_turn_int = 1;
+					}
+					else if (strcmp(user02_Color, "black") == 0) {
+						init_move_black();
+						user_turn_int = 1;
+					}
+					print("\n");
+				}
+				else if (king_true_int == 2 && strcmp(user02_Color, "black") == 0) {
+					print("%s you winn", user01_Name);
+					wiktory = 1;
+				}
+				else if (king_true_int == 1 && strcmp(user02_Color, "white") == 0) {
+					print("%s you winn", user01_Name);
+					wiktory = 1;
+				}
 			}
 			else {
 				print("\nSomething Whent Wrong! \n");
@@ -159,7 +192,8 @@ int main(void) {
 			}
 			else if (continueAns == 'y') {
 				isDone = 1;
-				print("\n\n");
+				print("\n\n\n\n\n\n\n\n");
+				printf("\033[H\033[J");
 			}
 			else {
 				print("\nPls answer! \n");
