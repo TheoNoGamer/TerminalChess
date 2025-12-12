@@ -1,5 +1,4 @@
-﻿  main.c
-C:\Users\theo.lidec\Desktop\VS2022\TerminalChess\TerminalChess\main.c(36,10): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\theo.lidec\Desktop\VS2022\TerminalChess\TerminalChess\main.c(80,3): warning C4013: 'init_blank_board_symbols' undefined; assuming extern returning int
-C:\Users\theo.lidec\Desktop\VS2022\TerminalChess\TerminalChess\main.c(136,7): warning C4013: 'init_move_black' undefined; assuming extern returning int
+﻿  chessboard_symbols.c
+C:\Users\theo.lidec\Desktop\VS2022\TerminalChess\TerminalChess\chessboard_symbols.c(3747,98): warning C4028: formal parameter 5 different from declaration
+C:\Users\theo.lidec\Desktop\VS2022\TerminalChess\TerminalChess\chessboard_symbols.c(3747,120): warning C4028: formal parameter 6 different from declaration
   TerminalChess.vcxproj -> C:\Users\theo.lidec\Desktop\VS2022\TerminalChess\x64\Debug\TerminalChess.exe

@@ -6,7 +6,7 @@
 // Files: a=1, b=2, ..., h=8
 // Ranks: 1–8
 
-// White pawns
+// White pawnsd
 #define PAWN01_WHITE_X 1
 #define PAWN01_WHITE_Y 2
 #define PAWN02_WHITE_X 2

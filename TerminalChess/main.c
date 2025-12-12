@@ -139,10 +139,12 @@ int main(void) {
 				else if (king_true_int == 1 && strcmp(user01_Color, "white") == 0) {
 					print("%s you winn", user02_Name);
 					wiktory = 1;
+					king_true_int = 0;
 				}
 				else if (king_true_int == 2 && strcmp(user01_Color, "black") == 0) {
 					print("%s you winn", user02_Name);
 					wiktory = 1;
+					king_true_int = 0;
 				}
 			}
 			else if (user_turn_int == 2) { // If user02 turn
@@ -164,10 +166,12 @@ int main(void) {
 				else if (king_true_int == 2 && strcmp(user02_Color, "black") == 0) {
 					print("%s you winn", user01_Name);
 					wiktory = 1;
+					king_true_int = 0;
 				}
 				else if (king_true_int == 1 && strcmp(user02_Color, "white") == 0) {
 					print("%s you winn", user01_Name);
 					wiktory = 1;
+					king_true_int = 0;
 				}
 			}
 			else {

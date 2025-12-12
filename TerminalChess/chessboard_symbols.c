@@ -170,6 +170,8 @@ void init_start_board_symbols() {
 
 }
 
+/// when "x0" is changges player, should not do that
+
 // make white and black move diferent voids
 void init_move_white() {
     char cord_x_char;
@@ -2064,7 +2066,7 @@ void init_move_black() {
                                 }
                             }
                             else if (cord_x_int_02 == cord_x_int - 1 || cord_x_int_02 == cord_x_int + 1) {
-                                if (cord_y_int_02 == cord_y_int + 1) {
+                                if (cord_y_int_02 == cord_y_int - 1) {
                                     if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02][1], EMPTY_ID) != 0) {
                                         piece_there_truefalse_int = 1;
                                     }
