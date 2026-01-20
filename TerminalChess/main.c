@@ -33,8 +33,7 @@ int main(void) {
 			user02_Color_int = 0;  // 0 = undefined // 1 = white // 2 = black
 			user_turn_int = 0;
 
-			srand(time(0));
-			randNum = rand() % 40 + 1; /* define white/black */
+			randNum = randomNumnumberGen(40); /* define white/black */
 			// print("---- Debug__Debug__ Random number: %i ---- \n", randNum); /* ---- DEBUG ---- */
 			if (randNum <= 20) {
 				strcpy(user01_Color, "white"); strcpy(user02_Color, "black");
@@ -54,9 +53,9 @@ int main(void) {
 			userNamesValid = 0;
 			do {
 				print("The firs user write your name: ");
-				scanf(" %s", &user01_Name);
+				scanf(" %[^\n]", &user01_Name);
 				print("Hi %s, now the second user pls write your name: ", user01_Name);
-				scanf(" %s", &user02_Name);
+				scanf(" %[^\n]", &user02_Name);
 				 
 				if (strcmp(user01_Name, user02_Name) == 0) {
 					print("\nYou can not have duplicate names! \n\n");

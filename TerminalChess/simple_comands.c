@@ -21,3 +21,8 @@ void print(const char* format, ...) {
     vprintf(format, args);
     va_end(args);
 }
+
+int randomNumnumberGen(amount) {
+    srand(time(0));
+    return rand() % amount + 1;
+}

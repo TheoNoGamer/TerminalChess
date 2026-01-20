@@ -170,9 +170,7 @@ void init_start_board_symbols() {
 
 }
 
-/// when "x0" is changges player, should not do that
 
-// make white and black move diferent voids
 void init_move_white() {
     char cord_x_char;
     int cord_x_int;
@@ -226,60 +224,92 @@ void init_move_white() {
                         scanf(" %i", &cord_y_int_02);
 
                         if (cord_x_char_02 == 'x' && cord_y_int_02 == 0) {
-                            break;
+                            selectCordValid = 0;
+                            selectCordValid_02 = 1;
                         }
+                        else {
+                            if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' ||
+                                cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
 
-                        if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' ||
-                            cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
-
-                            if (cord_x_char >= 'a' && cord_x_char <= 'h') {
-                                cord_x_int = cord_x_char - 'a' + 1;
+                                if (cord_x_char >= 'a' && cord_x_char <= 'h') {
+                                    cord_x_int = cord_x_char - 'a' + 1;
+                                }
+                                else {
+                                    print("Something went wrong.\n");
+                                    exit(1);
+                                }
                             }
                             else {
                                 print("Something went wrong.\n");
                                 exit(1);
                             }
-                        }
-                        else {
-                            print("Something went wrong.\n");
-                            exit(1);
-                        }
 
-                        cord_x_int_02 = cord_x_char_02 - 'a' + 1;
-                        strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
-                        strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
+                            cord_x_int_02 = cord_x_char_02 - 'a' + 1;
+                            strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
+                            strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
 
-                        if (strcmp(piece_Symbol_02, piece_Pawn_White) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Rook_White) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Bishop_White) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Knight_White) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Queen_White) == 0 ||
-                            strcmp(piece_Symbol_02, piece_King_White) == 0) {
+                            if (strcmp(piece_Symbol_02, piece_Pawn_White) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Rook_White) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Bishop_White) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Knight_White) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Queen_White) == 0 ||
+                                strcmp(piece_Symbol_02, piece_King_White) == 0) {
 
-                            print("you can not move over your own piece!!");
+                                print("you can not move over your own piece!!");
 
-                        }
-                        else {
-                            if (cord_x_int_02 == cord_x_int) {
-                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02][0], "   ") == 0) {
-                                    print("\nYou Selected %c%i \n", cord_x_char_02, cord_y_int_02);
+                            }
+                            else {
+                                if (cord_x_int_02 == cord_x_int) {
+                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02][0], "   ") == 0) {
+                                        print("\nYou Selected %c%i \n", cord_x_char_02, cord_y_int_02);
 
-                                    if (cord_y_int_02 == cord_y_int + 1) {
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        print("Move piece 1 step");
-                                        selectCordValid = 1;
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 2) {
-                                        if (cord_y_int == 2) {
+                                        if (cord_y_int_02 == cord_y_int + 1) {
                                             move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            print("Move piece 2 steps");
+                                            print("Move piece 1 step");
                                             selectCordValid = 1;
                                             selectCordValid_02 = 1;
                                         }
+                                        else if (cord_y_int_02 == cord_y_int + 2) {
+                                            if (cord_y_int == 2) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                print("Move piece 2 steps");
+                                                selectCordValid = 1;
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("You can not move there!");
+                                                selectCordValid_02 = 0;
+                                            }
+                                        }
                                         else {
-                                            print("You can not move there!");
-                                            selectCordValid_02 = 0;
+                                            print("You can not move there! Error");
+                                        }
+                                    }
+                                    else {
+                                        print("you can not walk over an other piece!");
+                                    }
+                                }
+                                else if (cord_x_int_02 == cord_x_int - 1 || cord_x_int_02 == cord_x_int + 1) {
+                                    if (cord_y_int_02 == cord_y_int + 1) {
+                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02][1], EMPTY_ID) != 0) {
+                                            piece_there_truefalse_int = 1;
+                                        }
+                                        else {
+                                            piece_there_truefalse_int = 0;
+                                        }
+
+                                        if (piece_there_truefalse_int == 1) {
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            print("\nYou moved to %c%i \n", cord_x_char_02, cord_y_int_02);
+                                            selectCordValid = 1;
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (piece_there_truefalse_int == 0) {
+                                            print("\nYou can not move diagonal when there is no piece to be taken");
+                                        }
+                                        else {
+                                            print("Something went wrong.\n");
+                                            exit(1);
                                         }
                                     }
                                     else {
@@ -287,46 +317,19 @@ void init_move_white() {
                                     }
                                 }
                                 else {
-                                    print("you can not walk over an other piece!");
+                                    print("You need to select a valid scuare on the board!!\n");
+                                    selectCordValid_02 = 0;
                                 }
-                            }
-                            else if (cord_x_int_02 == cord_x_int - 1 || cord_x_int_02 == cord_x_int + 1) {
-                                if (cord_y_int_02 == cord_y_int + 1) {
-                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02][1], EMPTY_ID) != 0) {
-                                        piece_there_truefalse_int = 1;
-                                    }
-                                    else {
-                                        piece_there_truefalse_int = 0;
-                                    }
-
-                                    if (piece_there_truefalse_int == 1) {
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        print("\nYou moved to %c%i \n", cord_x_char_02, cord_y_int_02);
-                                        selectCordValid = 1;
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (piece_there_truefalse_int == 0) {
-                                        print("\nYou can not move diagonal when there is no piece to be taken");
-                                    }
-                                    else {
-                                        print("Something went wrong.\n");
-                                        exit(1);
-                                    }
-                                }
-                                else {
-                                    print("You can not move there! Error");
-                                }
-                            }
-                            else {
-                                print("You need to select a valid scuare on the board!!\n");
-                                selectCordValid_02 = 0;
                             }
                         }
+
+                        if (cord_y_int_02 == 8) {
+                            white_pawn_select_piece(cord_x_int_02, cord_y_int_02);
+                        }
+
                     } while (selectCordValid_02 == 0);
 
-                    if (cord_y_int_02 == 8) {
-                        white_pawn_select_piece(cord_x_int_02, cord_y_int_02);
-                    }
+                    
                 }
                 else if (strcmp(symb_cord[cord_x_int][cord_y_int][0], "[R]") == 0) { // White Rook
                     print("This is a White Rook\n");
@@ -337,457 +340,460 @@ void init_move_white() {
                         scanf(" %i", &cord_y_int_02);
 
                         if (cord_x_char_02 == 'x' && cord_y_int_02 == 0) {
-                            //print("exit\n");
-                            break;
+                            selectCordValid = 0;
+                            selectCordValid_02 = 1;
                         }
-
-                        if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' || cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
-                            //print("\nYou Selected %c%i \n", cord_x_char, cord_y_int);
-                            if (cord_x_char >= 'a' && cord_x_char <= 'h') {
-                                cord_x_int = cord_x_char - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                        else {
+                            if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' || cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
+                                //print("\nYou Selected %c%i \n", cord_x_char, cord_y_int);
+                                if (cord_x_char >= 'a' && cord_x_char <= 'h') {
+                                    cord_x_int = cord_x_char - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                                }
+                                else {
+                                    print("Something went wrong.\n");
+                                    exit(1);
+                                }
                             }
                             else {
                                 print("Something went wrong.\n");
                                 exit(1);
                             }
-                        }
-                        else {
-                            print("Something went wrong.\n");
-                            exit(1);
-                        }
 
-                        cord_x_int_02 = cord_x_char_02 - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                            cord_x_int_02 = cord_x_char_02 - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
 
-                        strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
-                        strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
+                            strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
+                            strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
 
-                        if (/*strcmp(piece_Symbol_02, "   ") == 0 || */
-                            strcmp(piece_Symbol_02, piece_Pawn_White) == 0 || strcmp(piece_Symbol_02, piece_Rook_White) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Bishop_White) == 0 || strcmp(piece_Symbol_02, piece_Knight_White) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Queen_White) == 0 || strcmp(piece_Symbol_02, piece_King_White) == 0) {
-                            print("you can not move over your own piece!!");
-                        }
-                        else {
-                            if (cord_x_int_02 == cord_x_int && cord_y_int_02 != cord_y_int) { // ^
-                                if (cord_y_int_02 > cord_y_int) { // move up
-                                    if (cord_y_int_02 == cord_y_int + 1) { // +1
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 2) { // +2
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 3) { // +3
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
-                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                selectCordValid_02 = 1;
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 4) { // +4
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
-                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                    selectCordValid_02 = 1;
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 5) { // +5
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
-                                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                        selectCordValid_02 = 1;
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 6) { // +6
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
-                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 5][0], "   ") == 0) {
-                                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                            selectCordValid_02 = 1;
-                                                        }
-                                                        else {
-                                                            print("you can not move there");
-                                                        }
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 7) { // +7
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
-                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 5][0], "   ") == 0) {
-                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 6][0], "   ") == 0) {
-                                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                                selectCordValid_02 = 1;
-                                                            }
-                                                            else {
-                                                                print("you can not move there");
-                                                            }
-                                                        }
-                                                        else {
-                                                            print("you can not move there");
-                                                        }
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                }
-                                else if (cord_y_int_02 < cord_y_int) { // move down
-                                    if (cord_y_int_02 == cord_y_int - 1) { // -1
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 2) { // -2
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 3) { // +3
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
-                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                selectCordValid_02 = 1;
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 4) { // +4
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
-                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                    selectCordValid_02 = 1;
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 5) { // +5
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
-                                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                        selectCordValid_02 = 1;
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 6) { // +6
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
-                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 5][0], "   ") == 0) {
-                                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                            selectCordValid_02 = 1;
-                                                        }
-                                                        else {
-                                                            print("you can not move there");
-                                                        }
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 7) { // +7
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
-                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 5][0], "   ") == 0) {
-                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 6][0], "   ") == 0) {
-                                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                                selectCordValid_02 = 1;
-                                                            }
-                                                            else {
-                                                                print("you can not move there");
-                                                            }
-                                                        }
-                                                        else {
-                                                            print("you can not move there");
-                                                        }
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                }
-                                
+                            if (/*strcmp(piece_Symbol_02, "   ") == 0 || */
+                                strcmp(piece_Symbol_02, piece_Pawn_White) == 0 || strcmp(piece_Symbol_02, piece_Rook_White) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Bishop_White) == 0 || strcmp(piece_Symbol_02, piece_Knight_White) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Queen_White) == 0 || strcmp(piece_Symbol_02, piece_King_White) == 0) {
+                                print("you can not move over your own piece!!");
                             }
-                            else if (cord_y_int_02 == cord_y_int && cord_x_int_02 != cord_x_int) { // >
-                                if (cord_x_int_02 > cord_x_int) { // move right
-                                    if (cord_x_int_02 == cord_x_int + 1) { // +1
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 2) { // +2
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 3) { // +3
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 4) { // +4
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 5) { // +5
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 6) { // +6
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 7) { // +7
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                }
-                                else if (cord_x_int_02 < cord_x_int) { // move left
-                                    if (cord_x_int_02 == cord_x_int - 1) { // -1
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 2) { // -2
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 3) { // -3
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 4) { // -4
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 5) { // -5
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 6) { // -6
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 7) { // -7
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                }
-
-                            }
-                            
                             else {
-                                print("You need to select a valid scuare on the board!!\n");
-                                selectCordValid_02 = 0;
+                                if (cord_x_int_02 == cord_x_int && cord_y_int_02 != cord_y_int) { // ^
+                                    if (cord_y_int_02 > cord_y_int) { // move up
+                                        if (cord_y_int_02 == cord_y_int + 1) { // +1
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 2) { // +2
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 3) { // +3
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                    selectCordValid_02 = 1;
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 4) { // +4
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                        selectCordValid_02 = 1;
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 5) { // +5
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
+                                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                            selectCordValid_02 = 1;
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 6) { // +6
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
+                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 5][0], "   ") == 0) {
+                                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                                selectCordValid_02 = 1;
+                                                            }
+                                                            else {
+                                                                print("you can not move there");
+                                                            }
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 7) { // +7
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
+                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 5][0], "   ") == 0) {
+                                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 6][0], "   ") == 0) {
+                                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                                    selectCordValid_02 = 1;
+                                                                }
+                                                                else {
+                                                                    print("you can not move there");
+                                                                }
+                                                            }
+                                                            else {
+                                                                print("you can not move there");
+                                                            }
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                    }
+                                    else if (cord_y_int_02 < cord_y_int) { // move down
+                                        if (cord_y_int_02 == cord_y_int - 1) { // -1
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 2) { // -2
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 3) { // +3
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                    selectCordValid_02 = 1;
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 4) { // +4
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                        selectCordValid_02 = 1;
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 5) { // +5
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
+                                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                            selectCordValid_02 = 1;
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 6) { // +6
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
+                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 5][0], "   ") == 0) {
+                                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                                selectCordValid_02 = 1;
+                                                            }
+                                                            else {
+                                                                print("you can not move there");
+                                                            }
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 7) { // +7
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
+                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 5][0], "   ") == 0) {
+                                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 6][0], "   ") == 0) {
+                                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                                    selectCordValid_02 = 1;
+                                                                }
+                                                                else {
+                                                                    print("you can not move there");
+                                                                }
+                                                            }
+                                                            else {
+                                                                print("you can not move there");
+                                                            }
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                    }
+
+                                }
+                                else if (cord_y_int_02 == cord_y_int && cord_x_int_02 != cord_x_int) { // >
+                                    if (cord_x_int_02 > cord_x_int) { // move right
+                                        if (cord_x_int_02 == cord_x_int + 1) { // +1
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 2) { // +2
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 3) { // +3
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 4) { // +4
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 5) { // +5
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 6) { // +6
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 7) { // +7
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                    }
+                                    else if (cord_x_int_02 < cord_x_int) { // move left
+                                        if (cord_x_int_02 == cord_x_int - 1) { // -1
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 2) { // -2
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 3) { // -3
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 4) { // -4
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 5) { // -5
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 6) { // -6
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 7) { // -7
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                    }
+
+                                }
+
+                                else {
+                                    print("You need to select a valid scuare on the board!!\n");
+                                    selectCordValid_02 = 0;
+                                }
                             }
+
                         }
+
                     } while (selectCordValid_02 == 0);
                 }
                 else if (strcmp(symb_cord[cord_x_int][cord_y_int][0], "[N]") == 0) {
@@ -800,63 +806,66 @@ void init_move_white() {
                         scanf(" %i", &cord_y_int_02);
 
                         if (cord_x_char_02 == 'x' && cord_y_int_02 == 0) {
-                            //print("exit\n");
-                            break;
+                            selectCordValid = 0;
+                            selectCordValid_02 = 1;
                         }
-
-                        if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' || cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
-                            //print("\nYou Selected %c%i \n", cord_x_char, cord_y_int);
-                            if (cord_x_char >= 'a' && cord_x_char <= 'h') {
-                                cord_x_int = cord_x_char - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                        else {
+                            if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' || cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
+                                //print("\nYou Selected %c%i \n", cord_x_char, cord_y_int);
+                                if (cord_x_char >= 'a' && cord_x_char <= 'h') {
+                                    cord_x_int = cord_x_char - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                                }
+                                else {
+                                    print("Something went wrong.\n");
+                                    exit(1);
+                                }
                             }
                             else {
                                 print("Something went wrong.\n");
                                 exit(1);
                             }
-                        }
-                        else {
-                            print("Something went wrong.\n");
-                            exit(1);
-                        }
 
-                        cord_x_int_02 = cord_x_char_02 - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                            cord_x_int_02 = cord_x_char_02 - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
 
-                        strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
-                        strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
+                            strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
+                            strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
 
-                        if (/*strcmp(piece_Symbol_02, "   ") == 0 || */
-                            strcmp(piece_Symbol_02, piece_Pawn_White) == 0 || strcmp(piece_Symbol_02, piece_Rook_White) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Bishop_White) == 0 || strcmp(piece_Symbol_02, piece_Knight_White) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Queen_White) == 0 || strcmp(piece_Symbol_02, piece_King_White) == 0) {
-                            print("you can not move over your own piece!!");
-                        }
-                        else {
-                            if (cord_x_int_02 == cord_x_int + 1 || cord_x_int_02 == cord_x_int - 1) {  // move up down
-                                if (cord_y_int_02 == cord_y_int + 2) {
-                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                    selectCordValid_02 = 1;
-                                }
-                                else if (cord_y_int_02 == cord_y_int - 2) {
-                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                    selectCordValid_02 = 1;
-                                }
-                                
-                            }
-                            else if(cord_y_int_02 == cord_y_int +1 || cord_y_int_02 == cord_y_int -1) { // move left right
-                                if (cord_x_int_02 == cord_x_int + 2) {
-                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                    selectCordValid_02 = 1;
-                                }
-                                else if (cord_x_int_02 == cord_x_int - 2) {
-                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                    selectCordValid_02 = 1;
-                                }
+                            if (/*strcmp(piece_Symbol_02, "   ") == 0 || */
+                                strcmp(piece_Symbol_02, piece_Pawn_White) == 0 || strcmp(piece_Symbol_02, piece_Rook_White) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Bishop_White) == 0 || strcmp(piece_Symbol_02, piece_Knight_White) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Queen_White) == 0 || strcmp(piece_Symbol_02, piece_King_White) == 0) {
+                                print("you can not move over your own piece!!");
                             }
                             else {
-                                print("You need to select a valid scuare on the board!!\n");
-                                selectCordValid_02 = 0;
+                                if (cord_x_int_02 == cord_x_int + 1 || cord_x_int_02 == cord_x_int - 1) {  // move up down
+                                    if (cord_y_int_02 == cord_y_int + 2) {
+                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                        selectCordValid_02 = 1;
+                                    }
+                                    else if (cord_y_int_02 == cord_y_int - 2) {
+                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                        selectCordValid_02 = 1;
+                                    }
+
+                                }
+                                else if (cord_y_int_02 == cord_y_int + 1 || cord_y_int_02 == cord_y_int - 1) { // move left right
+                                    if (cord_x_int_02 == cord_x_int + 2) {
+                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                        selectCordValid_02 = 1;
+                                    }
+                                    else if (cord_x_int_02 == cord_x_int - 2) {
+                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                        selectCordValid_02 = 1;
+                                    }
+                                }
+                                else {
+                                    print("You need to select a valid scuare on the board!!\n");
+                                    selectCordValid_02 = 0;
+                                }
                             }
+
                         }
+
                     } while (selectCordValid_02 == 0);
                 }
                 else if (strcmp(symb_cord[cord_x_int][cord_y_int][0], "[B]") == 0) {
@@ -868,274 +877,277 @@ void init_move_white() {
                         scanf(" %i", &cord_y_int_02);
 
                         if (cord_x_char_02 == 'x' && cord_y_int_02 == 0) {
-                            //print("exit\n");
-                            break;
+                            selectCordValid = 0;
+                            selectCordValid_02 = 1;
                         }
-
-                        if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' || cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
-                            //print("\nYou Selected %c%i \n", cord_x_char, cord_y_int);
-                            if (cord_x_char >= 'a' && cord_x_char <= 'h') {
-                                cord_x_int = cord_x_char - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                        else {
+                            if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' || cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
+                                //print("\nYou Selected %c%i \n", cord_x_char, cord_y_int);
+                                if (cord_x_char >= 'a' && cord_x_char <= 'h') {
+                                    cord_x_int = cord_x_char - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                                }
+                                else {
+                                    print("Something went wrong.\n");
+                                    exit(1);
+                                }
                             }
                             else {
                                 print("Something went wrong.\n");
                                 exit(1);
                             }
-                        }
-                        else {
-                            print("Something went wrong.\n");
-                            exit(1);
-                        }
 
-                        cord_x_int_02 = cord_x_char_02 - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                            cord_x_int_02 = cord_x_char_02 - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
 
-                        strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
-                        strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
+                            strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
+                            strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
 
-                        if (/*strcmp(piece_Symbol_02, "   ") == 0 || */
-                            strcmp(piece_Symbol_02, piece_Pawn_White) == 0 || strcmp(piece_Symbol_02, piece_Rook_White) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Bishop_White) == 0 || strcmp(piece_Symbol_02, piece_Knight_White) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Queen_White) == 0 || strcmp(piece_Symbol_02, piece_King_White) == 0) {
-                            print("you can not move over your own piece!!");
-                        }
-                        else {
-                            if (cord_y_int_02 > cord_y_int) {  // move up
-                                if (cord_x_int_02 > cord_x_int) { // up right
-                                    if (cord_x_int_02 == cord_x_int + 1 || cord_y_int_02 == cord_y_int + 1) {
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 2 || cord_y_int_02 == cord_y_int + 2) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 3 || cord_y_int_02 == cord_y_int + 3) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0  &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 4 || cord_y_int_02 == cord_y_int + 4) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 5 || cord_y_int_02 == cord_y_int + 5) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 6 || cord_y_int_02 == cord_y_int + 6) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 - 5][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 7 || cord_y_int_02 == cord_y_int + 7) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 - 5][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02 - 6][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                }
-                                else if (cord_x_int_02 < cord_x_int) { // up left
-                                    if (cord_x_int_02 == cord_x_int - 1 || cord_y_int_02 == cord_y_int + 1) {
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 2 || cord_y_int_02 == cord_y_int + 2) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 3 || cord_y_int_02 == cord_y_int + 3) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 4 || cord_y_int_02 == cord_y_int + 4) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 5 || cord_y_int_02 == cord_y_int + 5) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 6 || cord_y_int_02 == cord_y_int + 6) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 - 5][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 7 || cord_y_int_02 == cord_y_int + 7) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 - 5][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02 - 6][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                }
-                            }
-                            else if (cord_y_int_02 < cord_y_int) { // move down
-                                if (cord_x_int_02 > cord_x_int) { // down right
-                                    if (cord_x_int_02 == cord_x_int + 1 || cord_y_int_02 == cord_y_int - 1) {
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 2 || cord_y_int_02 == cord_y_int - 2) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 3 || cord_y_int_02 == cord_y_int - 3) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 4 || cord_y_int_02 == cord_y_int - 4) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 5 || cord_y_int_02 == cord_y_int - 5) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 6 || cord_y_int_02 == cord_y_int - 6) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 + 5][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 7 || cord_y_int_02 == cord_y_int - 7) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 + 5][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02 + 6][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                }
-                                else if (cord_x_int_02 < cord_x_int) { // down left
-                                    if (cord_x_int_02 == cord_x_int - 1 || cord_y_int_02 == cord_y_int - 1) {
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 2 || cord_y_int_02 == cord_y_int - 2) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 3 || cord_y_int_02 == cord_y_int - 3) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 4 || cord_y_int_02 == cord_y_int - 4) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 5 || cord_y_int_02 == cord_y_int - 5) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 6 || cord_y_int_02 == cord_y_int - 6) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 + 5][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 7 || cord_y_int_02 == cord_y_int - 7) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 + 5][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02 + 6][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                }
+                            if (/*strcmp(piece_Symbol_02, "   ") == 0 || */
+                                strcmp(piece_Symbol_02, piece_Pawn_White) == 0 || strcmp(piece_Symbol_02, piece_Rook_White) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Bishop_White) == 0 || strcmp(piece_Symbol_02, piece_Knight_White) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Queen_White) == 0 || strcmp(piece_Symbol_02, piece_King_White) == 0) {
+                                print("you can not move over your own piece!!");
                             }
                             else {
-                                print("You need to select a valid scuare on the board!!\n");
-                                selectCordValid_02 = 0;
+                                if (cord_y_int_02 > cord_y_int) {  // move up
+                                    if (cord_x_int_02 > cord_x_int) { // up right
+                                        if (cord_x_int_02 == cord_x_int + 1 || cord_y_int_02 == cord_y_int + 1) {
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 2 || cord_y_int_02 == cord_y_int + 2) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 3 || cord_y_int_02 == cord_y_int + 3) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 4 || cord_y_int_02 == cord_y_int + 4) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 5 || cord_y_int_02 == cord_y_int + 5) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 6 || cord_y_int_02 == cord_y_int + 6) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 - 5][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 7 || cord_y_int_02 == cord_y_int + 7) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 - 5][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02 - 6][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                    }
+                                    else if (cord_x_int_02 < cord_x_int) { // up left
+                                        if (cord_x_int_02 == cord_x_int - 1 || cord_y_int_02 == cord_y_int + 1) {
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 2 || cord_y_int_02 == cord_y_int + 2) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 3 || cord_y_int_02 == cord_y_int + 3) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 4 || cord_y_int_02 == cord_y_int + 4) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 5 || cord_y_int_02 == cord_y_int + 5) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 6 || cord_y_int_02 == cord_y_int + 6) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 - 5][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 7 || cord_y_int_02 == cord_y_int + 7) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 - 5][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02 - 6][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                    }
+                                }
+                                else if (cord_y_int_02 < cord_y_int) { // move down
+                                    if (cord_x_int_02 > cord_x_int) { // down right
+                                        if (cord_x_int_02 == cord_x_int + 1 || cord_y_int_02 == cord_y_int - 1) {
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 2 || cord_y_int_02 == cord_y_int - 2) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 3 || cord_y_int_02 == cord_y_int - 3) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 4 || cord_y_int_02 == cord_y_int - 4) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 5 || cord_y_int_02 == cord_y_int - 5) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 6 || cord_y_int_02 == cord_y_int - 6) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 + 5][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 7 || cord_y_int_02 == cord_y_int - 7) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 + 5][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02 + 6][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                    }
+                                    else if (cord_x_int_02 < cord_x_int) { // down left
+                                        if (cord_x_int_02 == cord_x_int - 1 || cord_y_int_02 == cord_y_int - 1) {
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 2 || cord_y_int_02 == cord_y_int - 2) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 3 || cord_y_int_02 == cord_y_int - 3) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 4 || cord_y_int_02 == cord_y_int - 4) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 5 || cord_y_int_02 == cord_y_int - 5) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 6 || cord_y_int_02 == cord_y_int - 6) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 + 5][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 7 || cord_y_int_02 == cord_y_int - 7) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 + 5][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02 + 6][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                    }
+                                }
+                                else {
+                                    print("You need to select a valid scuare on the board!!\n");
+                                    selectCordValid_02 = 0;
+                                }
                             }
+
                         }
+
                     } while (selectCordValid_02 == 0);
                 }
                 else if (strcmp(symb_cord[cord_x_int][cord_y_int][0], "[Q]") == 0) {
@@ -1147,690 +1159,693 @@ void init_move_white() {
                         scanf(" %i", &cord_y_int_02);
 
                         if (cord_x_char_02 == 'x' && cord_y_int_02 == 0) {
-                            //print("exit\n");
-                            break;
+                            selectCordValid = 0;
+                            selectCordValid_02 = 1;
                         }
-
-                        if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' || cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
-                            //print("\nYou Selected %c%i \n", cord_x_char, cord_y_int);
-                            if (cord_x_char >= 'a' && cord_x_char <= 'h') {
-                                cord_x_int = cord_x_char - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                        else {
+                            if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' || cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
+                                //print("\nYou Selected %c%i \n", cord_x_char, cord_y_int);
+                                if (cord_x_char >= 'a' && cord_x_char <= 'h') {
+                                    cord_x_int = cord_x_char - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                                }
+                                else {
+                                    print("Something went wrong.\n");
+                                    exit(1);
+                                }
                             }
                             else {
                                 print("Something went wrong.\n");
                                 exit(1);
                             }
-                        }
-                        else {
-                            print("Something went wrong.\n");
-                            exit(1);
-                        }
 
-                        cord_x_int_02 = cord_x_char_02 - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                            cord_x_int_02 = cord_x_char_02 - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
 
-                        strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
-                        strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
+                            strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
+                            strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
 
-                        if (/*strcmp(piece_Symbol_02, "   ") == 0 || */
-                            strcmp(piece_Symbol_02, piece_Pawn_White) == 0 || strcmp(piece_Symbol_02, piece_Rook_White) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Bishop_White) == 0 || strcmp(piece_Symbol_02, piece_Knight_White) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Queen_White) == 0 || strcmp(piece_Symbol_02, piece_King_White) == 0) {
-                            print("you can not move over your own piece!!");
-                        }
-                        else {
-                            if (cord_x_int_02 == cord_x_int && cord_y_int_02 != cord_y_int) { // ^
-                                if (cord_y_int_02 > cord_y_int) { // move up
-                                    if (cord_y_int_02 == cord_y_int + 1) { // +1
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 2) { // +2
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 3) { // +3
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
-                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                selectCordValid_02 = 1;
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 4) { // +4
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
-                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                    selectCordValid_02 = 1;
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 5) { // +5
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
-                                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                        selectCordValid_02 = 1;
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 6) { // +6
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
-                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 5][0], "   ") == 0) {
-                                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                            selectCordValid_02 = 1;
-                                                        }
-                                                        else {
-                                                            print("you can not move there");
-                                                        }
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 7) { // +7
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
-                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 5][0], "   ") == 0) {
-                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 6][0], "   ") == 0) {
-                                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                                selectCordValid_02 = 1;
-                                                            }
-                                                            else {
-                                                                print("you can not move there");
-                                                            }
-                                                        }
-                                                        else {
-                                                            print("you can not move there");
-                                                        }
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                }
-                                else if (cord_y_int_02 < cord_y_int) { // move down
-                                    if (cord_y_int_02 == cord_y_int - 1) { // -1
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 2) { // -2
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 3) { // +3
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
-                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                selectCordValid_02 = 1;
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 4) { // +4
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
-                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                    selectCordValid_02 = 1;
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 5) { // +5
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
-                                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                        selectCordValid_02 = 1;
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 6) { // +6
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
-                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 5][0], "   ") == 0) {
-                                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                            selectCordValid_02 = 1;
-                                                        }
-                                                        else {
-                                                            print("you can not move there");
-                                                        }
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 7) { // +7
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
-                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 5][0], "   ") == 0) {
-                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 6][0], "   ") == 0) {
-                                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                                selectCordValid_02 = 1;
-                                                            }
-                                                            else {
-                                                                print("you can not move there");
-                                                            }
-                                                        }
-                                                        else {
-                                                            print("you can not move there");
-                                                        }
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                }
-
+                            if (/*strcmp(piece_Symbol_02, "   ") == 0 || */
+                                strcmp(piece_Symbol_02, piece_Pawn_White) == 0 || strcmp(piece_Symbol_02, piece_Rook_White) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Bishop_White) == 0 || strcmp(piece_Symbol_02, piece_Knight_White) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Queen_White) == 0 || strcmp(piece_Symbol_02, piece_King_White) == 0) {
+                                print("you can not move over your own piece!!");
                             }
-                            else if (cord_y_int_02 == cord_y_int && cord_x_int_02 != cord_x_int) { // >
-                                if (cord_x_int_02 > cord_x_int) { // move right
-                                    if (cord_x_int_02 == cord_x_int + 1) { // +1
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 2) { // +2
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 3) { // +3
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 4) { // +4
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 5) { // +5
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 6) { // +6
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 7) { // +7
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                }
-                                else if (cord_x_int_02 < cord_x_int) { // move left
-                                    if (cord_x_int_02 == cord_x_int - 1) { // -1
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 2) { // -2
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 3) { // -3
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 4) { // -4
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 5) { // -5
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 6) { // -6
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 7) { // -7
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                }
-
-                            }
-
-                            else if (cord_y_int_02 > cord_y_int && cord_x_int_02 != cord_x_int) {  // move up
-                                if (cord_x_int_02 > cord_x_int) { // up right
-                                    if (cord_x_int_02 == cord_x_int + 1 || cord_y_int_02 == cord_y_int + 1) {
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 2 || cord_y_int_02 == cord_y_int + 2) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 3 || cord_y_int_02 == cord_y_int + 3) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 4 || cord_y_int_02 == cord_y_int + 4) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 5 || cord_y_int_02 == cord_y_int + 5) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 6 || cord_y_int_02 == cord_y_int + 6) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 - 5][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 7 || cord_y_int_02 == cord_y_int + 7) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 - 5][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02 - 6][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                }
-                                else if (cord_x_int_02 < cord_x_int) { // up left
-                                    if (cord_x_int_02 == cord_x_int - 1 || cord_y_int_02 == cord_y_int + 1) {
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 2 || cord_y_int_02 == cord_y_int + 2) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 3 || cord_y_int_02 == cord_y_int + 3) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 4 || cord_y_int_02 == cord_y_int + 4) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 5 || cord_y_int_02 == cord_y_int + 5) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 6 || cord_y_int_02 == cord_y_int + 6) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 - 5][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 7 || cord_y_int_02 == cord_y_int + 7) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 - 5][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02 - 6][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                }
-                            }
-                            else if (cord_y_int_02 < cord_y_int && cord_x_int_02 != cord_x_int) { // move down
-                                if (cord_x_int_02 > cord_x_int) { // down right
-                                    if (cord_x_int_02 == cord_x_int + 1 || cord_y_int_02 == cord_y_int - 1) {
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 2 || cord_y_int_02 == cord_y_int - 2) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 3 || cord_y_int_02 == cord_y_int - 3) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 4 || cord_y_int_02 == cord_y_int - 4) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 5 || cord_y_int_02 == cord_y_int - 5) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 6 || cord_y_int_02 == cord_y_int - 6) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 + 5][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 7 || cord_y_int_02 == cord_y_int - 7) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 + 5][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02 + 6][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                }
-                                else if (cord_x_int_02 < cord_x_int) { // down left
-                                    if (cord_x_int_02 == cord_x_int - 1 || cord_y_int_02 == cord_y_int - 1) {
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 2 || cord_y_int_02 == cord_y_int - 2) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 3 || cord_y_int_02 == cord_y_int - 3) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 4 || cord_y_int_02 == cord_y_int - 4) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 5 || cord_y_int_02 == cord_y_int - 5) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 6 || cord_y_int_02 == cord_y_int - 6) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 + 5][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 7 || cord_y_int_02 == cord_y_int - 7) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 + 5][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02 + 6][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                }
-                            }
-
                             else {
-                                print("You need to select a valid scuare on the board!!\n");
-                                selectCordValid_02 = 0;
+                                if (cord_x_int_02 == cord_x_int && cord_y_int_02 != cord_y_int) { // ^
+                                    if (cord_y_int_02 > cord_y_int) { // move up
+                                        if (cord_y_int_02 == cord_y_int + 1) { // +1
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 2) { // +2
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 3) { // +3
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                    selectCordValid_02 = 1;
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 4) { // +4
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                        selectCordValid_02 = 1;
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 5) { // +5
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
+                                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                            selectCordValid_02 = 1;
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 6) { // +6
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
+                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 5][0], "   ") == 0) {
+                                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                                selectCordValid_02 = 1;
+                                                            }
+                                                            else {
+                                                                print("you can not move there");
+                                                            }
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 7) { // +7
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
+                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 5][0], "   ") == 0) {
+                                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 6][0], "   ") == 0) {
+                                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                                    selectCordValid_02 = 1;
+                                                                }
+                                                                else {
+                                                                    print("you can not move there");
+                                                                }
+                                                            }
+                                                            else {
+                                                                print("you can not move there");
+                                                            }
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                    }
+                                    else if (cord_y_int_02 < cord_y_int) { // move down
+                                        if (cord_y_int_02 == cord_y_int - 1) { // -1
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 2) { // -2
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 3) { // +3
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                    selectCordValid_02 = 1;
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 4) { // +4
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                        selectCordValid_02 = 1;
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 5) { // +5
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
+                                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                            selectCordValid_02 = 1;
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 6) { // +6
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
+                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 5][0], "   ") == 0) {
+                                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                                selectCordValid_02 = 1;
+                                                            }
+                                                            else {
+                                                                print("you can not move there");
+                                                            }
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 7) { // +7
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
+                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 5][0], "   ") == 0) {
+                                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 6][0], "   ") == 0) {
+                                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                                    selectCordValid_02 = 1;
+                                                                }
+                                                                else {
+                                                                    print("you can not move there");
+                                                                }
+                                                            }
+                                                            else {
+                                                                print("you can not move there");
+                                                            }
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                    }
+
+                                }
+                                else if (cord_y_int_02 == cord_y_int && cord_x_int_02 != cord_x_int) { // >
+                                    if (cord_x_int_02 > cord_x_int) { // move right
+                                        if (cord_x_int_02 == cord_x_int + 1) { // +1
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 2) { // +2
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 3) { // +3
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 4) { // +4
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 5) { // +5
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 6) { // +6
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 7) { // +7
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                    }
+                                    else if (cord_x_int_02 < cord_x_int) { // move left
+                                        if (cord_x_int_02 == cord_x_int - 1) { // -1
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 2) { // -2
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 3) { // -3
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 4) { // -4
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 5) { // -5
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 6) { // -6
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 7) { // -7
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                    }
+
+                                }
+
+                                else if (cord_y_int_02 > cord_y_int && cord_x_int_02 != cord_x_int) {  // move up
+                                    if (cord_x_int_02 > cord_x_int) { // up right
+                                        if (cord_x_int_02 == cord_x_int + 1 || cord_y_int_02 == cord_y_int + 1) {
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 2 || cord_y_int_02 == cord_y_int + 2) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 3 || cord_y_int_02 == cord_y_int + 3) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 4 || cord_y_int_02 == cord_y_int + 4) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 5 || cord_y_int_02 == cord_y_int + 5) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 6 || cord_y_int_02 == cord_y_int + 6) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 - 5][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 7 || cord_y_int_02 == cord_y_int + 7) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 - 5][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02 - 6][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                    }
+                                    else if (cord_x_int_02 < cord_x_int) { // up left
+                                        if (cord_x_int_02 == cord_x_int - 1 || cord_y_int_02 == cord_y_int + 1) {
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 2 || cord_y_int_02 == cord_y_int + 2) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 3 || cord_y_int_02 == cord_y_int + 3) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 4 || cord_y_int_02 == cord_y_int + 4) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 5 || cord_y_int_02 == cord_y_int + 5) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 6 || cord_y_int_02 == cord_y_int + 6) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 - 5][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 7 || cord_y_int_02 == cord_y_int + 7) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 - 5][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02 - 6][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                    }
+                                }
+                                else if (cord_y_int_02 < cord_y_int && cord_x_int_02 != cord_x_int) { // move down
+                                    if (cord_x_int_02 > cord_x_int) { // down right
+                                        if (cord_x_int_02 == cord_x_int + 1 || cord_y_int_02 == cord_y_int - 1) {
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 2 || cord_y_int_02 == cord_y_int - 2) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 3 || cord_y_int_02 == cord_y_int - 3) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 4 || cord_y_int_02 == cord_y_int - 4) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 5 || cord_y_int_02 == cord_y_int - 5) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 6 || cord_y_int_02 == cord_y_int - 6) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 + 5][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 7 || cord_y_int_02 == cord_y_int - 7) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 + 5][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02 + 6][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                    }
+                                    else if (cord_x_int_02 < cord_x_int) { // down left
+                                        if (cord_x_int_02 == cord_x_int - 1 || cord_y_int_02 == cord_y_int - 1) {
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 2 || cord_y_int_02 == cord_y_int - 2) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 3 || cord_y_int_02 == cord_y_int - 3) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 4 || cord_y_int_02 == cord_y_int - 4) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 5 || cord_y_int_02 == cord_y_int - 5) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 6 || cord_y_int_02 == cord_y_int - 6) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 + 5][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 7 || cord_y_int_02 == cord_y_int - 7) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 + 5][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02 + 6][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                else {
+                                    print("You need to select a valid scuare on the board!!\n");
+                                    selectCordValid_02 = 0;
+                                }
                             }
+
                         }
+
                     } while (selectCordValid_02 == 0);
 
                 }
@@ -1843,74 +1858,77 @@ void init_move_white() {
                         scanf(" %i", &cord_y_int_02);
 
                         if (cord_x_char_02 == 'x' && cord_y_int_02 == 0) {
-                            //print("exit\n");
-                            break;
+                            selectCordValid = 0;
+                            selectCordValid_02 = 1;
                         }
-
-                        if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' || cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
-                            //print("\nYou Selected %c%i \n", cord_x_char, cord_y_int);
-                            if (cord_x_char >= 'a' && cord_x_char <= 'h') {
-                                cord_x_int = cord_x_char - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                        else {
+                            if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' || cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
+                                //print("\nYou Selected %c%i \n", cord_x_char, cord_y_int);
+                                if (cord_x_char >= 'a' && cord_x_char <= 'h') {
+                                    cord_x_int = cord_x_char - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                                }
+                                else {
+                                    print("Something went wrong.\n");
+                                    exit(1);
+                                }
                             }
                             else {
                                 print("Something went wrong.\n");
                                 exit(1);
                             }
-                        }
-                        else {
-                            print("Something went wrong.\n");
-                            exit(1);
-                        }
 
-                        cord_x_int_02 = cord_x_char_02 - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                            cord_x_int_02 = cord_x_char_02 - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
 
-                        strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
-                        strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
+                            strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
+                            strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
 
-                        if (/*strcmp(piece_Symbol_02, "   ") == 0 || */
-                            strcmp(piece_Symbol_02, piece_Pawn_White) == 0 || strcmp(piece_Symbol_02, piece_Rook_White) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Bishop_White) == 0 || strcmp(piece_Symbol_02, piece_Knight_White) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Queen_White) == 0 || strcmp(piece_Symbol_02, piece_King_White) == 0) {
-                            print("you can not move over your own piece!!");
-                        }
-                        else {
-                            if (cord_x_int_02 == cord_x_int && cord_y_int_02 == cord_y_int + 1) {
-                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                selectCordValid_02 = 1;
-                            }
-                            else if (cord_x_int_02 == cord_x_int + 1 && cord_y_int_02 == cord_y_int + 1) {
-                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                selectCordValid_02 = 1;
-                            }
-                            else if (cord_x_int_02 == cord_x_int + 1 && cord_y_int_02 == cord_y_int) {
-                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                selectCordValid_02 = 1;
-                            }
-                            else if (cord_x_int_02 == cord_x_int + 1 && cord_y_int_02 == cord_y_int - 1) {
-                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                selectCordValid_02 = 1;
-                            }
-                            else if (cord_x_int_02 == cord_x_int && cord_y_int_02 == cord_y_int - 1) {
-                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                selectCordValid_02 = 1;
-                            }
-                            else if (cord_x_int_02 == cord_x_int - 1 && cord_y_int_02 == cord_y_int - 1) {
-                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                selectCordValid_02 = 1;
-                            }
-                            else if (cord_x_int_02 == cord_x_int - 1 && cord_y_int_02 == cord_y_int) {
-                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                selectCordValid_02 = 1;
-                            }
-                            else if (cord_x_int_02 == cord_x_int - 1 && cord_y_int_02 == cord_y_int + 1) {
-                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                selectCordValid_02 = 1;
+                            if (/*strcmp(piece_Symbol_02, "   ") == 0 || */
+                                strcmp(piece_Symbol_02, piece_Pawn_White) == 0 || strcmp(piece_Symbol_02, piece_Rook_White) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Bishop_White) == 0 || strcmp(piece_Symbol_02, piece_Knight_White) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Queen_White) == 0 || strcmp(piece_Symbol_02, piece_King_White) == 0) {
+                                print("you can not move over your own piece!!");
                             }
                             else {
-                                print("You need to select a valid scuare on the board!!\n");
-                                selectCordValid_02 = 0;
+                                if (cord_x_int_02 == cord_x_int && cord_y_int_02 == cord_y_int + 1) {
+                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                    selectCordValid_02 = 1;
+                                }
+                                else if (cord_x_int_02 == cord_x_int + 1 && cord_y_int_02 == cord_y_int + 1) {
+                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                    selectCordValid_02 = 1;
+                                }
+                                else if (cord_x_int_02 == cord_x_int + 1 && cord_y_int_02 == cord_y_int) {
+                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                    selectCordValid_02 = 1;
+                                }
+                                else if (cord_x_int_02 == cord_x_int + 1 && cord_y_int_02 == cord_y_int - 1) {
+                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                    selectCordValid_02 = 1;
+                                }
+                                else if (cord_x_int_02 == cord_x_int && cord_y_int_02 == cord_y_int - 1) {
+                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                    selectCordValid_02 = 1;
+                                }
+                                else if (cord_x_int_02 == cord_x_int - 1 && cord_y_int_02 == cord_y_int - 1) {
+                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                    selectCordValid_02 = 1;
+                                }
+                                else if (cord_x_int_02 == cord_x_int - 1 && cord_y_int_02 == cord_y_int) {
+                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                    selectCordValid_02 = 1;
+                                }
+                                else if (cord_x_int_02 == cord_x_int - 1 && cord_y_int_02 == cord_y_int + 1) {
+                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                    selectCordValid_02 = 1;
+                                }
+                                else {
+                                    print("You need to select a valid scuare on the board!!\n");
+                                    selectCordValid_02 = 0;
+                                }
                             }
+
                         }
+
                     } while (selectCordValid_02 == 0);
 
                 }
@@ -2001,60 +2019,92 @@ void init_move_black() {
                         scanf(" %i", &cord_y_int_02);
 
                         if (cord_x_char_02 == 'x' && cord_y_int_02 == 0) {
-                            break;
+                            selectCordValid = 0;
+                            selectCordValid_02 = 1;
                         }
+                        else {
+                            if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' ||
+                                cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
 
-                        if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' ||
-                            cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
-
-                            if (cord_x_char >= 'a' && cord_x_char <= 'h') {
-                                cord_x_int = cord_x_char - 'a' + 1;
+                                if (cord_x_char >= 'a' && cord_x_char <= 'h') {
+                                    cord_x_int = cord_x_char - 'a' + 1;
+                                }
+                                else {
+                                    print("Something went wrong.\n");
+                                    exit(1);
+                                }
                             }
                             else {
                                 print("Something went wrong.\n");
                                 exit(1);
                             }
-                        }
-                        else {
-                            print("Something went wrong.\n");
-                            exit(1);
-                        }
 
-                        cord_x_int_02 = cord_x_char_02 - 'a' + 1;
-                        strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
-                        strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
+                            cord_x_int_02 = cord_x_char_02 - 'a' + 1;
+                            strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
+                            strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
 
-                        if (strcmp(piece_Symbol_02, piece_Pawn_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Rook_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Bishop_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Knight_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Queen_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_King_Black) == 0) {
+                            if (strcmp(piece_Symbol_02, piece_Pawn_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Rook_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Bishop_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Knight_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Queen_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_King_Black) == 0) {
 
-                            print("you can not move over your own piece!!");
+                                print("you can not move over your own piece!!");
 
-                        }
-                        else {
-                            if (cord_x_int_02 == cord_x_int) {
-                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02][0], "   ") == 0) {
-                                    print("\nYou Selected %c%i \n", cord_x_char_02, cord_y_int_02);
+                            }
+                            else {
+                                if (cord_x_int_02 == cord_x_int) {
+                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02][0], "   ") == 0) {
+                                        print("\nYou Selected %c%i \n", cord_x_char_02, cord_y_int_02);
 
-                                    if (cord_y_int_02 == cord_y_int - 1) {
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        print("Move piece 1 step");
-                                        selectCordValid = 1;
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 2) {
-                                        if (cord_y_int == 7) {
+                                        if (cord_y_int_02 == cord_y_int - 1) {
                                             move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            print("Move piece 2 steps");
+                                            print("Move piece 1 step");
                                             selectCordValid = 1;
                                             selectCordValid_02 = 1;
                                         }
+                                        else if (cord_y_int_02 == cord_y_int - 2) {
+                                            if (cord_y_int == 7) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                print("Move piece 2 steps");
+                                                selectCordValid = 1;
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("You can not move there!");
+                                                selectCordValid_02 = 0;
+                                            }
+                                        }
                                         else {
-                                            print("You can not move there!");
-                                            selectCordValid_02 = 0;
+                                            print("You can not move there! Error");
+                                        }
+                                    }
+                                    else {
+                                        print("you can not walk over an other piece!");
+                                    }
+                                }
+                                else if (cord_x_int_02 == cord_x_int - 1 || cord_x_int_02 == cord_x_int + 1) {
+                                    if (cord_y_int_02 == cord_y_int - 1) {
+                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02][1], EMPTY_ID) != 0) {
+                                            piece_there_truefalse_int = 1;
+                                        }
+                                        else {
+                                            piece_there_truefalse_int = 0;
+                                        }
+
+                                        if (piece_there_truefalse_int == 1) {
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            print("\nYou moved to %c%i \n", cord_x_char_02, cord_y_int_02);
+                                            selectCordValid = 1;
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (piece_there_truefalse_int == 0) {
+                                            print("\nYou can not move diagonal when there is no piece to be taken");
+                                        }
+                                        else {
+                                            print("Something went wrong.\n");
+                                            exit(1);
                                         }
                                     }
                                     else {
@@ -2062,41 +2112,13 @@ void init_move_black() {
                                     }
                                 }
                                 else {
-                                    print("you can not walk over an other piece!");
+                                    print("You need to select a valid scuare on the board!!\n");
+                                    selectCordValid_02 = 0;
                                 }
                             }
-                            else if (cord_x_int_02 == cord_x_int - 1 || cord_x_int_02 == cord_x_int + 1) {
-                                if (cord_y_int_02 == cord_y_int - 1) {
-                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02][1], EMPTY_ID) != 0) {
-                                        piece_there_truefalse_int = 1;
-                                    }
-                                    else {
-                                        piece_there_truefalse_int = 0;
-                                    }
 
-                                    if (piece_there_truefalse_int == 1) {
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        print("\nYou moved to %c%i \n", cord_x_char_02, cord_y_int_02);
-                                        selectCordValid = 1;
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (piece_there_truefalse_int == 0) {
-                                        print("\nYou can not move diagonal when there is no piece to be taken");
-                                    }
-                                    else {
-                                        print("Something went wrong.\n");
-                                        exit(1);
-                                    }
-                                }
-                                else {
-                                    print("You can not move there! Error");
-                                }
-                            }
-                            else {
-                                print("You need to select a valid scuare on the board!!\n");
-                                selectCordValid_02 = 0;
-                            }
                         }
+
                     } while (selectCordValid_02 == 0);
 
                     if (cord_y_int_02 == 1) {
@@ -2112,461 +2134,464 @@ void init_move_black() {
                         scanf(" %i", &cord_y_int_02);
 
                         if (cord_x_char_02 == 'x' && cord_y_int_02 == 0) {
-                            //print("exit\n");
-                            break;
+                            selectCordValid = 0;
+                            selectCordValid_02 = 1;
                         }
-
-                        if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' || cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
-                            //print("\nYou Selected %c%i \n", cord_x_char, cord_y_int);
-                            if (cord_x_char >= 'a' && cord_x_char <= 'h') {
-                                cord_x_int = cord_x_char - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                        else {
+                            if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' || cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
+                                //print("\nYou Selected %c%i \n", cord_x_char, cord_y_int);
+                                if (cord_x_char >= 'a' && cord_x_char <= 'h') {
+                                    cord_x_int = cord_x_char - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                                }
+                                else {
+                                    print("Something went wrong.\n");
+                                    exit(1);
+                                }
                             }
                             else {
                                 print("Something went wrong.\n");
                                 exit(1);
                             }
-                        }
-                        else {
-                            print("Something went wrong.\n");
-                            exit(1);
-                        }
 
-                        cord_x_int_02 = cord_x_char_02 - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                            cord_x_int_02 = cord_x_char_02 - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
 
-                        strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
-                        strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
+                            strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
+                            strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
 
-                        if (strcmp(piece_Symbol_02, piece_Pawn_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Rook_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Bishop_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Knight_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Queen_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_King_Black) == 0) {
+                            if (strcmp(piece_Symbol_02, piece_Pawn_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Rook_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Bishop_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Knight_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Queen_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_King_Black) == 0) {
 
-                            print("you can not move over your own piece!!");
-
-                        }
-                        else {
-                            if (cord_x_int_02 == cord_x_int && cord_y_int_02 != cord_y_int) { // ^
-                                if (cord_y_int_02 > cord_y_int) { // move up
-                                    if (cord_y_int_02 == cord_y_int + 1) { // +1
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 2) { // +2
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 3) { // +3
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
-                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                selectCordValid_02 = 1;
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 4) { // +4
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
-                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                    selectCordValid_02 = 1;
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 5) { // +5
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
-                                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                        selectCordValid_02 = 1;
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 6) { // +6
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
-                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 5][0], "   ") == 0) {
-                                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                            selectCordValid_02 = 1;
-                                                        }
-                                                        else {
-                                                            print("you can not move there");
-                                                        }
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 7) { // +7
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
-                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 5][0], "   ") == 0) {
-                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 6][0], "   ") == 0) {
-                                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                                selectCordValid_02 = 1;
-                                                            }
-                                                            else {
-                                                                print("you can not move there");
-                                                            }
-                                                        }
-                                                        else {
-                                                            print("you can not move there");
-                                                        }
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                }
-                                else if (cord_y_int_02 < cord_y_int) { // move down
-                                    if (cord_y_int_02 == cord_y_int - 1) { // -1
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 2) { // -2
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 3) { // +3
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
-                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                selectCordValid_02 = 1;
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 4) { // +4
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
-                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                    selectCordValid_02 = 1;
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 5) { // +5
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
-                                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                        selectCordValid_02 = 1;
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 6) { // +6
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
-                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 5][0], "   ") == 0) {
-                                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                            selectCordValid_02 = 1;
-                                                        }
-                                                        else {
-                                                            print("you can not move there");
-                                                        }
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 7) { // +7
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
-                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 5][0], "   ") == 0) {
-                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 6][0], "   ") == 0) {
-                                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                                selectCordValid_02 = 1;
-                                                            }
-                                                            else {
-                                                                print("you can not move there");
-                                                            }
-                                                        }
-                                                        else {
-                                                            print("you can not move there");
-                                                        }
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                }
+                                print("you can not move over your own piece!!");
 
                             }
-                            else if (cord_y_int_02 == cord_y_int && cord_x_int_02 != cord_x_int) { // >
-                                if (cord_x_int_02 > cord_x_int) { // move right
-                                    if (cord_x_int_02 == cord_x_int + 1) { // +1
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 2) { // +2
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 3) { // +3
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 4) { // +4
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 5) { // +5
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 6) { // +6
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 7) { // +7
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                }
-                                else if (cord_x_int_02 < cord_x_int) { // move left
-                                    if (cord_x_int_02 == cord_x_int - 1) { // -1
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 2) { // -2
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 3) { // -3
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 4) { // -4
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 5) { // -5
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 6) { // -6
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 7) { // -7
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                }
-
-                            }
-
                             else {
-                                print("You need to select a valid scuare on the board!!\n");
-                                selectCordValid_02 = 0;
+                                if (cord_x_int_02 == cord_x_int && cord_y_int_02 != cord_y_int) { // ^
+                                    if (cord_y_int_02 > cord_y_int) { // move up
+                                        if (cord_y_int_02 == cord_y_int + 1) { // +1
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 2) { // +2
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 3) { // +3
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                    selectCordValid_02 = 1;
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 4) { // +4
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                        selectCordValid_02 = 1;
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 5) { // +5
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
+                                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                            selectCordValid_02 = 1;
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 6) { // +6
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
+                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 5][0], "   ") == 0) {
+                                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                                selectCordValid_02 = 1;
+                                                            }
+                                                            else {
+                                                                print("you can not move there");
+                                                            }
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 7) { // +7
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
+                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 5][0], "   ") == 0) {
+                                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 6][0], "   ") == 0) {
+                                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                                    selectCordValid_02 = 1;
+                                                                }
+                                                                else {
+                                                                    print("you can not move there");
+                                                                }
+                                                            }
+                                                            else {
+                                                                print("you can not move there");
+                                                            }
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                    }
+                                    else if (cord_y_int_02 < cord_y_int) { // move down
+                                        if (cord_y_int_02 == cord_y_int - 1) { // -1
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 2) { // -2
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 3) { // +3
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                    selectCordValid_02 = 1;
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 4) { // +4
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                        selectCordValid_02 = 1;
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 5) { // +5
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
+                                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                            selectCordValid_02 = 1;
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 6) { // +6
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
+                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 5][0], "   ") == 0) {
+                                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                                selectCordValid_02 = 1;
+                                                            }
+                                                            else {
+                                                                print("you can not move there");
+                                                            }
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 7) { // +7
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
+                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 5][0], "   ") == 0) {
+                                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 6][0], "   ") == 0) {
+                                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                                    selectCordValid_02 = 1;
+                                                                }
+                                                                else {
+                                                                    print("you can not move there");
+                                                                }
+                                                            }
+                                                            else {
+                                                                print("you can not move there");
+                                                            }
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                    }
+
+                                }
+                                else if (cord_y_int_02 == cord_y_int && cord_x_int_02 != cord_x_int) { // >
+                                    if (cord_x_int_02 > cord_x_int) { // move right
+                                        if (cord_x_int_02 == cord_x_int + 1) { // +1
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 2) { // +2
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 3) { // +3
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 4) { // +4
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 5) { // +5
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 6) { // +6
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 7) { // +7
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                    }
+                                    else if (cord_x_int_02 < cord_x_int) { // move left
+                                        if (cord_x_int_02 == cord_x_int - 1) { // -1
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 2) { // -2
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 3) { // -3
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 4) { // -4
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 5) { // -5
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 6) { // -6
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 7) { // -7
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                    }
+
+                                }
+
+                                else {
+                                    print("You need to select a valid scuare on the board!!\n");
+                                    selectCordValid_02 = 0;
+                                }
                             }
+
                         }
+
                     } while (selectCordValid_02 == 0);
                 }
                 else if (strcmp(symb_cord[cord_x_int][cord_y_int][0], " N ") == 0) {
@@ -2579,67 +2604,70 @@ void init_move_black() {
                         scanf(" %i", &cord_y_int_02);
 
                         if (cord_x_char_02 == 'x' && cord_y_int_02 == 0) {
-                            //print("exit\n");
-                            break;
+                            selectCordValid = 0;
+                            selectCordValid_02 = 1;
                         }
-
-                        if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' || cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
-                            //print("\nYou Selected %c%i \n", cord_x_char, cord_y_int);
-                            if (cord_x_char >= 'a' && cord_x_char <= 'h') {
-                                cord_x_int = cord_x_char - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                        else {
+                            if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' || cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
+                                //print("\nYou Selected %c%i \n", cord_x_char, cord_y_int);
+                                if (cord_x_char >= 'a' && cord_x_char <= 'h') {
+                                    cord_x_int = cord_x_char - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                                }
+                                else {
+                                    print("Something went wrong.\n");
+                                    exit(1);
+                                }
                             }
                             else {
                                 print("Something went wrong.\n");
                                 exit(1);
                             }
-                        }
-                        else {
-                            print("Something went wrong.\n");
-                            exit(1);
-                        }
 
-                        cord_x_int_02 = cord_x_char_02 - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                            cord_x_int_02 = cord_x_char_02 - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
 
-                        strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
-                        strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
+                            strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
+                            strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
 
-                        if (strcmp(piece_Symbol_02, piece_Pawn_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Rook_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Bishop_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Knight_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Queen_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_King_Black) == 0) {
+                            if (strcmp(piece_Symbol_02, piece_Pawn_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Rook_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Bishop_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Knight_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Queen_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_King_Black) == 0) {
 
-                            print("you can not move over your own piece!!");
+                                print("you can not move over your own piece!!");
 
-                        }
-                        else {
-                            if (cord_x_int_02 == cord_x_int + 1 || cord_x_int_02 == cord_x_int - 1) {  // move up down
-                                if (cord_y_int_02 == cord_y_int + 2) {
-                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                    selectCordValid_02 = 1;
-                                }
-                                else if (cord_y_int_02 == cord_y_int - 2) {
-                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                    selectCordValid_02 = 1;
-                                }
-
-                            }
-                            else if (cord_y_int_02 == cord_y_int + 1 || cord_y_int_02 == cord_y_int - 1) { // move left right
-                                if (cord_x_int_02 == cord_x_int + 2) {
-                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                    selectCordValid_02 = 1;
-                                }
-                                else if (cord_x_int_02 == cord_x_int - 2) {
-                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                    selectCordValid_02 = 1;
-                                }
                             }
                             else {
-                                print("You need to select a valid scuare on the board!!\n");
-                                selectCordValid_02 = 0;
+                                if (cord_x_int_02 == cord_x_int + 1 || cord_x_int_02 == cord_x_int - 1) {  // move up down
+                                    if (cord_y_int_02 == cord_y_int + 2) {
+                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                        selectCordValid_02 = 1;
+                                    }
+                                    else if (cord_y_int_02 == cord_y_int - 2) {
+                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                        selectCordValid_02 = 1;
+                                    }
+
+                                }
+                                else if (cord_y_int_02 == cord_y_int + 1 || cord_y_int_02 == cord_y_int - 1) { // move left right
+                                    if (cord_x_int_02 == cord_x_int + 2) {
+                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                        selectCordValid_02 = 1;
+                                    }
+                                    else if (cord_x_int_02 == cord_x_int - 2) {
+                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                        selectCordValid_02 = 1;
+                                    }
+                                }
+                                else {
+                                    print("You need to select a valid scuare on the board!!\n");
+                                    selectCordValid_02 = 0;
+                                }
                             }
+
                         }
+
                     } while (selectCordValid_02 == 0);
                 }
                 else if (strcmp(symb_cord[cord_x_int][cord_y_int][0], " B ") == 0) {
@@ -2651,278 +2679,281 @@ void init_move_black() {
                         scanf(" %i", &cord_y_int_02);
 
                         if (cord_x_char_02 == 'x' && cord_y_int_02 == 0) {
-                            //print("exit\n");
-                            break;
+                            selectCordValid = 0;
+                            selectCordValid_02 = 1;
                         }
-
-                        if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' || cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
-                            //print("\nYou Selected %c%i \n", cord_x_char, cord_y_int);
-                            if (cord_x_char >= 'a' && cord_x_char <= 'h') {
-                                cord_x_int = cord_x_char - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                        else {
+                            if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' || cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
+                                //print("\nYou Selected %c%i \n", cord_x_char, cord_y_int);
+                                if (cord_x_char >= 'a' && cord_x_char <= 'h') {
+                                    cord_x_int = cord_x_char - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                                }
+                                else {
+                                    print("Something went wrong.\n");
+                                    exit(1);
+                                }
                             }
                             else {
                                 print("Something went wrong.\n");
                                 exit(1);
                             }
-                        }
-                        else {
-                            print("Something went wrong.\n");
-                            exit(1);
-                        }
 
-                        cord_x_int_02 = cord_x_char_02 - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                            cord_x_int_02 = cord_x_char_02 - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
 
-                        strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
-                        strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
+                            strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
+                            strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
 
-                        if (strcmp(piece_Symbol_02, piece_Pawn_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Rook_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Bishop_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Knight_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Queen_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_King_Black) == 0) {
+                            if (strcmp(piece_Symbol_02, piece_Pawn_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Rook_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Bishop_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Knight_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Queen_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_King_Black) == 0) {
 
-                            print("you can not move over your own piece!!");
+                                print("you can not move over your own piece!!");
 
-                        }
-                        else {
-                            if (cord_y_int_02 > cord_y_int) {  // move up
-                                if (cord_x_int_02 > cord_x_int) { // up right
-                                    if (cord_x_int_02 == cord_x_int + 1 || cord_y_int_02 == cord_y_int + 1) {
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 2 || cord_y_int_02 == cord_y_int + 2) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 3 || cord_y_int_02 == cord_y_int + 3) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 4 || cord_y_int_02 == cord_y_int + 4) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 5 || cord_y_int_02 == cord_y_int + 5) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 6 || cord_y_int_02 == cord_y_int + 6) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 - 5][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 7 || cord_y_int_02 == cord_y_int + 7) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 - 5][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02 - 6][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                }
-                                else if (cord_x_int_02 < cord_x_int) { // up left
-                                    if (cord_x_int_02 == cord_x_int - 1 || cord_y_int_02 == cord_y_int + 1) {
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 2 || cord_y_int_02 == cord_y_int + 2) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 3 || cord_y_int_02 == cord_y_int + 3) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 4 || cord_y_int_02 == cord_y_int + 4) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 5 || cord_y_int_02 == cord_y_int + 5) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 6 || cord_y_int_02 == cord_y_int + 6) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 - 5][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 7 || cord_y_int_02 == cord_y_int + 7) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 - 5][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02 - 6][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                }
-                            }
-                            else if (cord_y_int_02 < cord_y_int) { // move down
-                                if (cord_x_int_02 > cord_x_int) { // down right
-                                    if (cord_x_int_02 == cord_x_int + 1 || cord_y_int_02 == cord_y_int - 1) {
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 2 || cord_y_int_02 == cord_y_int - 2) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 3 || cord_y_int_02 == cord_y_int - 3) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 4 || cord_y_int_02 == cord_y_int - 4) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 5 || cord_y_int_02 == cord_y_int - 5) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 6 || cord_y_int_02 == cord_y_int - 6) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 + 5][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 7 || cord_y_int_02 == cord_y_int - 7) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 + 5][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02 + 6][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                }
-                                else if (cord_x_int_02 < cord_x_int) { // down left
-                                    if (cord_x_int_02 == cord_x_int - 1 || cord_y_int_02 == cord_y_int - 1) {
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 2 || cord_y_int_02 == cord_y_int - 2) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 3 || cord_y_int_02 == cord_y_int - 3) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 4 || cord_y_int_02 == cord_y_int - 4) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 5 || cord_y_int_02 == cord_y_int - 5) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 6 || cord_y_int_02 == cord_y_int - 6) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 + 5][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 7 || cord_y_int_02 == cord_y_int - 7) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 + 5][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02 + 6][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                }
                             }
                             else {
-                                print("You need to select a valid scuare on the board!!\n");
-                                selectCordValid_02 = 0;
+                                if (cord_y_int_02 > cord_y_int) {  // move up
+                                    if (cord_x_int_02 > cord_x_int) { // up right
+                                        if (cord_x_int_02 == cord_x_int + 1 || cord_y_int_02 == cord_y_int + 1) {
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 2 || cord_y_int_02 == cord_y_int + 2) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 3 || cord_y_int_02 == cord_y_int + 3) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 4 || cord_y_int_02 == cord_y_int + 4) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 5 || cord_y_int_02 == cord_y_int + 5) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 6 || cord_y_int_02 == cord_y_int + 6) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 - 5][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 7 || cord_y_int_02 == cord_y_int + 7) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 - 5][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02 - 6][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                    }
+                                    else if (cord_x_int_02 < cord_x_int) { // up left
+                                        if (cord_x_int_02 == cord_x_int - 1 || cord_y_int_02 == cord_y_int + 1) {
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 2 || cord_y_int_02 == cord_y_int + 2) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 3 || cord_y_int_02 == cord_y_int + 3) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 4 || cord_y_int_02 == cord_y_int + 4) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 5 || cord_y_int_02 == cord_y_int + 5) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 6 || cord_y_int_02 == cord_y_int + 6) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 - 5][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 7 || cord_y_int_02 == cord_y_int + 7) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 - 5][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02 - 6][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                    }
+                                }
+                                else if (cord_y_int_02 < cord_y_int) { // move down
+                                    if (cord_x_int_02 > cord_x_int) { // down right
+                                        if (cord_x_int_02 == cord_x_int + 1 || cord_y_int_02 == cord_y_int - 1) {
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 2 || cord_y_int_02 == cord_y_int - 2) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 3 || cord_y_int_02 == cord_y_int - 3) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 4 || cord_y_int_02 == cord_y_int - 4) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 5 || cord_y_int_02 == cord_y_int - 5) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 6 || cord_y_int_02 == cord_y_int - 6) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 + 5][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 7 || cord_y_int_02 == cord_y_int - 7) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 + 5][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02 + 6][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                    }
+                                    else if (cord_x_int_02 < cord_x_int) { // down left
+                                        if (cord_x_int_02 == cord_x_int - 1 || cord_y_int_02 == cord_y_int - 1) {
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 2 || cord_y_int_02 == cord_y_int - 2) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 3 || cord_y_int_02 == cord_y_int - 3) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 4 || cord_y_int_02 == cord_y_int - 4) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 5 || cord_y_int_02 == cord_y_int - 5) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 6 || cord_y_int_02 == cord_y_int - 6) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 + 5][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 7 || cord_y_int_02 == cord_y_int - 7) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 + 5][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02 + 6][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                    }
+                                }
+                                else {
+                                    print("You need to select a valid scuare on the board!!\n");
+                                    selectCordValid_02 = 0;
+                                }
                             }
+
                         }
+
                     } while (selectCordValid_02 == 0);
                 }
                 else if (strcmp(symb_cord[cord_x_int][cord_y_int][0], " Q ") == 0) {
@@ -2934,694 +2965,697 @@ void init_move_black() {
                         scanf(" %i", &cord_y_int_02);
 
                         if (cord_x_char_02 == 'x' && cord_y_int_02 == 0) {
-                            //print("exit\n");
-                            break;
+                            selectCordValid = 0;
+                            selectCordValid_02 = 1;
                         }
-
-                        if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' || cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
-                            //print("\nYou Selected %c%i \n", cord_x_char, cord_y_int);
-                            if (cord_x_char >= 'a' && cord_x_char <= 'h') {
-                                cord_x_int = cord_x_char - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                        else {
+                            if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' || cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
+                                //print("\nYou Selected %c%i \n", cord_x_char, cord_y_int);
+                                if (cord_x_char >= 'a' && cord_x_char <= 'h') {
+                                    cord_x_int = cord_x_char - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                                }
+                                else {
+                                    print("Something went wrong.\n");
+                                    exit(1);
+                                }
                             }
                             else {
                                 print("Something went wrong.\n");
                                 exit(1);
                             }
-                        }
-                        else {
-                            print("Something went wrong.\n");
-                            exit(1);
-                        }
 
-                        cord_x_int_02 = cord_x_char_02 - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                            cord_x_int_02 = cord_x_char_02 - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
 
-                        strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
-                        strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
+                            strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
+                            strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
 
-                        if (strcmp(piece_Symbol_02, piece_Pawn_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Rook_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Bishop_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Knight_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Queen_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_King_Black) == 0) {
+                            if (strcmp(piece_Symbol_02, piece_Pawn_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Rook_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Bishop_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Knight_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Queen_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_King_Black) == 0) {
 
-                            print("you can not move over your own piece!!");
-
-                        }
-                        else {
-                            if (cord_x_int_02 == cord_x_int && cord_y_int_02 != cord_y_int) { // ^
-                                if (cord_y_int_02 > cord_y_int) { // move up
-                                    if (cord_y_int_02 == cord_y_int + 1) { // +1
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 2) { // +2
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 3) { // +3
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
-                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                selectCordValid_02 = 1;
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 4) { // +4
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
-                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                    selectCordValid_02 = 1;
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 5) { // +5
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
-                                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                        selectCordValid_02 = 1;
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 6) { // +6
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
-                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 5][0], "   ") == 0) {
-                                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                            selectCordValid_02 = 1;
-                                                        }
-                                                        else {
-                                                            print("you can not move there");
-                                                        }
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int + 7) { // +7
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
-                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 5][0], "   ") == 0) {
-                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 6][0], "   ") == 0) {
-                                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                                selectCordValid_02 = 1;
-                                                            }
-                                                            else {
-                                                                print("you can not move there");
-                                                            }
-                                                        }
-                                                        else {
-                                                            print("you can not move there");
-                                                        }
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                }
-                                else if (cord_y_int_02 < cord_y_int) { // move down
-                                    if (cord_y_int_02 == cord_y_int - 1) { // -1
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 2) { // -2
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 3) { // +3
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
-                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                selectCordValid_02 = 1;
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 4) { // +4
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
-                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                    selectCordValid_02 = 1;
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 5) { // +5
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
-                                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                        selectCordValid_02 = 1;
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 6) { // +6
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
-                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 5][0], "   ") == 0) {
-                                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                            selectCordValid_02 = 1;
-                                                        }
-                                                        else {
-                                                            print("you can not move there");
-                                                        }
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                    }
-                                    else if (cord_y_int_02 == cord_y_int - 7) { // +7
-                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
-                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
-                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
-                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 5][0], "   ") == 0) {
-                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 6][0], "   ") == 0) {
-                                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                                                selectCordValid_02 = 1;
-                                                            }
-                                                            else {
-                                                                print("you can not move there");
-                                                            }
-                                                        }
-                                                        else {
-                                                            print("you can not move there");
-                                                        }
-                                                    }
-                                                    else {
-                                                        print("you can not move there");
-                                                    }
-                                                }
-                                                else {
-                                                    print("you can not move there");
-                                                }
-                                            }
-                                            else {
-                                                print("you can not move there");
-                                            }
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                }
+                                print("you can not move over your own piece!!");
 
                             }
-                            else if (cord_y_int_02 == cord_y_int && cord_x_int_02 != cord_x_int) { // >
-                                if (cord_x_int_02 > cord_x_int) { // move right
-                                    if (cord_x_int_02 == cord_x_int + 1) { // +1
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 2) { // +2
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 3) { // +3
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 4) { // +4
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 5) { // +5
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 6) { // +6
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 7) { // +7
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                }
-                                else if (cord_x_int_02 < cord_x_int) { // move left
-                                    if (cord_x_int_02 == cord_x_int - 1) { // -1
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 2) { // -2
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 3) { // -3
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 4) { // -4
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 5) { // -5
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 6) { // -6
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 7) { // -7
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                        else {
-                                            print("you can not move there");
-                                        }
-                                    }
-                                }
-
-                            }
-
-                            else if (cord_y_int_02 > cord_y_int && cord_x_int_02 != cord_x_int) {  // move up
-                                if (cord_x_int_02 > cord_x_int) { // up right
-                                    if (cord_x_int_02 == cord_x_int + 1 || cord_y_int_02 == cord_y_int + 1) {
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 2 || cord_y_int_02 == cord_y_int + 2) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 3 || cord_y_int_02 == cord_y_int + 3) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 4 || cord_y_int_02 == cord_y_int + 4) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 5 || cord_y_int_02 == cord_y_int + 5) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 6 || cord_y_int_02 == cord_y_int + 6) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 - 5][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 7 || cord_y_int_02 == cord_y_int + 7) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 - 5][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02 - 6][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                }
-                                else if (cord_x_int_02 < cord_x_int) { // up left
-                                    if (cord_x_int_02 == cord_x_int - 1 || cord_y_int_02 == cord_y_int + 1) {
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 2 || cord_y_int_02 == cord_y_int + 2) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 3 || cord_y_int_02 == cord_y_int + 3) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 4 || cord_y_int_02 == cord_y_int + 4) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 5 || cord_y_int_02 == cord_y_int + 5) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 6 || cord_y_int_02 == cord_y_int + 6) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 - 5][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 7 || cord_y_int_02 == cord_y_int + 7) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 - 5][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02 - 6][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                }
-                            }
-                            else if (cord_y_int_02 < cord_y_int && cord_x_int_02 != cord_x_int) { // move down
-                                if (cord_x_int_02 > cord_x_int) { // down right
-                                    if (cord_x_int_02 == cord_x_int + 1 || cord_y_int_02 == cord_y_int - 1) {
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 2 || cord_y_int_02 == cord_y_int - 2) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 3 || cord_y_int_02 == cord_y_int - 3) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 4 || cord_y_int_02 == cord_y_int - 4) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 5 || cord_y_int_02 == cord_y_int - 5) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 6 || cord_y_int_02 == cord_y_int - 6) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 + 5][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int + 7 || cord_y_int_02 == cord_y_int - 7) {
-                                        if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 + 5][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02 + 6][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                }
-                                else if (cord_x_int_02 < cord_x_int) { // down left
-                                    if (cord_x_int_02 == cord_x_int - 1 || cord_y_int_02 == cord_y_int - 1) {
-                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                        selectCordValid_02 = 1;
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 2 || cord_y_int_02 == cord_y_int - 2) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 3 || cord_y_int_02 == cord_y_int - 3) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 4 || cord_y_int_02 == cord_y_int - 4) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 5 || cord_y_int_02 == cord_y_int - 5) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 6 || cord_y_int_02 == cord_y_int - 6) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 + 5][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                    else if (cord_x_int_02 == cord_x_int - 7 || cord_y_int_02 == cord_y_int - 7) {
-                                        if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 + 5][0], "   ") == 0 &&
-                                            strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02 + 6][0], "   ") == 0) {
-                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                            selectCordValid_02 = 1;
-                                        }
-                                    }
-                                }
-                            }
-
                             else {
-                                print("You need to select a valid scuare on the board!!\n");
-                                selectCordValid_02 = 0;
+                                if (cord_x_int_02 == cord_x_int && cord_y_int_02 != cord_y_int) { // ^
+                                    if (cord_y_int_02 > cord_y_int) { // move up
+                                        if (cord_y_int_02 == cord_y_int + 1) { // +1
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 2) { // +2
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 3) { // +3
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                    selectCordValid_02 = 1;
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 4) { // +4
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                        selectCordValid_02 = 1;
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 5) { // +5
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
+                                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                            selectCordValid_02 = 1;
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 6) { // +6
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
+                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 5][0], "   ") == 0) {
+                                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                                selectCordValid_02 = 1;
+                                                            }
+                                                            else {
+                                                                print("you can not move there");
+                                                            }
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int + 7) { // +7
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 4][0], "   ") == 0) {
+                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 5][0], "   ") == 0) {
+                                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 - 6][0], "   ") == 0) {
+                                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                                    selectCordValid_02 = 1;
+                                                                }
+                                                                else {
+                                                                    print("you can not move there");
+                                                                }
+                                                            }
+                                                            else {
+                                                                print("you can not move there");
+                                                            }
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                    }
+                                    else if (cord_y_int_02 < cord_y_int) { // move down
+                                        if (cord_y_int_02 == cord_y_int - 1) { // -1
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 2) { // -2
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 3) { // +3
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                    selectCordValid_02 = 1;
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 4) { // +4
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                        move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                        selectCordValid_02 = 1;
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 5) { // +5
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
+                                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                            selectCordValid_02 = 1;
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 6) { // +6
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
+                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 5][0], "   ") == 0) {
+                                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                                selectCordValid_02 = 1;
+                                                            }
+                                                            else {
+                                                                print("you can not move there");
+                                                            }
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                        }
+                                        else if (cord_y_int_02 == cord_y_int - 7) { // +7
+                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                    if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                        if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 4][0], "   ") == 0) {
+                                                            if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 5][0], "   ") == 0) {
+                                                                if (strcmp(symb_cord[cord_x_int_02][cord_y_int_02 + 6][0], "   ") == 0) {
+                                                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                                    selectCordValid_02 = 1;
+                                                                }
+                                                                else {
+                                                                    print("you can not move there");
+                                                                }
+                                                            }
+                                                            else {
+                                                                print("you can not move there");
+                                                            }
+                                                        }
+                                                        else {
+                                                            print("you can not move there");
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("you can not move there");
+                                                    }
+                                                }
+                                                else {
+                                                    print("you can not move there");
+                                                }
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                    }
+
+                                }
+                                else if (cord_y_int_02 == cord_y_int && cord_x_int_02 != cord_x_int) { // >
+                                    if (cord_x_int_02 > cord_x_int) { // move right
+                                        if (cord_x_int_02 == cord_x_int + 1) { // +1
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 2) { // +2
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 3) { // +3
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 4) { // +4
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 5) { // +5
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 6) { // +6
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 7) { // +7
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                    }
+                                    else if (cord_x_int_02 < cord_x_int) { // move left
+                                        if (cord_x_int_02 == cord_x_int - 1) { // -1
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 2) { // -2
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 3) { // -3
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 4) { // -4
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 5) { // -5
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 6) { // -6
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 7) { // -7
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                            else {
+                                                print("you can not move there");
+                                            }
+                                        }
+                                    }
+
+                                }
+
+                                else if (cord_y_int_02 > cord_y_int && cord_x_int_02 != cord_x_int) {  // move up
+                                    if (cord_x_int_02 > cord_x_int) { // up right
+                                        if (cord_x_int_02 == cord_x_int + 1 || cord_y_int_02 == cord_y_int + 1) {
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 2 || cord_y_int_02 == cord_y_int + 2) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 3 || cord_y_int_02 == cord_y_int + 3) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 4 || cord_y_int_02 == cord_y_int + 4) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 5 || cord_y_int_02 == cord_y_int + 5) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 6 || cord_y_int_02 == cord_y_int + 6) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 - 5][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 7 || cord_y_int_02 == cord_y_int + 7) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 - 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 - 5][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02 - 6][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                    }
+                                    else if (cord_x_int_02 < cord_x_int) { // up left
+                                        if (cord_x_int_02 == cord_x_int - 1 || cord_y_int_02 == cord_y_int + 1) {
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 2 || cord_y_int_02 == cord_y_int + 2) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 3 || cord_y_int_02 == cord_y_int + 3) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 4 || cord_y_int_02 == cord_y_int + 4) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 5 || cord_y_int_02 == cord_y_int + 5) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 6 || cord_y_int_02 == cord_y_int + 6) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 - 5][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 7 || cord_y_int_02 == cord_y_int + 7) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 - 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 - 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 - 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 - 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 - 5][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02 - 6][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                    }
+                                }
+                                else if (cord_y_int_02 < cord_y_int && cord_x_int_02 != cord_x_int) { // move down
+                                    if (cord_x_int_02 > cord_x_int) { // down right
+                                        if (cord_x_int_02 == cord_x_int + 1 || cord_y_int_02 == cord_y_int - 1) {
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 2 || cord_y_int_02 == cord_y_int - 2) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 3 || cord_y_int_02 == cord_y_int - 3) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 4 || cord_y_int_02 == cord_y_int - 4) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 5 || cord_y_int_02 == cord_y_int - 5) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 6 || cord_y_int_02 == cord_y_int - 6) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 + 5][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int + 7 || cord_y_int_02 == cord_y_int - 7) {
+                                            if (strcmp(symb_cord[cord_x_int_02 - 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 4][cord_y_int_02 + 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 5][cord_y_int_02 + 5][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 - 6][cord_y_int_02 + 6][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                    }
+                                    else if (cord_x_int_02 < cord_x_int) { // down left
+                                        if (cord_x_int_02 == cord_x_int - 1 || cord_y_int_02 == cord_y_int - 1) {
+                                            move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                            selectCordValid_02 = 1;
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 2 || cord_y_int_02 == cord_y_int - 2) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 3 || cord_y_int_02 == cord_y_int - 3) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 4 || cord_y_int_02 == cord_y_int - 4) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 5 || cord_y_int_02 == cord_y_int - 5) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 6 || cord_y_int_02 == cord_y_int - 6) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 + 5][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                        else if (cord_x_int_02 == cord_x_int - 7 || cord_y_int_02 == cord_y_int - 7) {
+                                            if (strcmp(symb_cord[cord_x_int_02 + 1][cord_y_int_02 + 1][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 2][cord_y_int_02 + 2][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 3][cord_y_int_02 + 3][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 4][cord_y_int_02 + 4][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 5][cord_y_int_02 + 5][0], "   ") == 0 &&
+                                                strcmp(symb_cord[cord_x_int_02 + 6][cord_y_int_02 + 6][0], "   ") == 0) {
+                                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                                selectCordValid_02 = 1;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                else {
+                                    print("You need to select a valid scuare on the board!!\n");
+                                    selectCordValid_02 = 0;
+                                }
                             }
+
                         }
+
                     } while (selectCordValid_02 == 0);
 
                 }
@@ -3634,78 +3668,81 @@ void init_move_black() {
                         scanf(" %i", &cord_y_int_02);
 
                         if (cord_x_char_02 == 'x' && cord_y_int_02 == 0) {
-                            //print("exit\n");
-                            break;
+                            selectCordValid = 0;
+                            selectCordValid_02 = 1;
                         }
-
-                        if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' || cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
-                            //print("\nYou Selected %c%i \n", cord_x_char, cord_y_int);
-                            if (cord_x_char >= 'a' && cord_x_char <= 'h') {
-                                cord_x_int = cord_x_char - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                        else {
+                            if (cord_x_char == 'a' || cord_x_char == 'b' || cord_x_char == 'c' || cord_x_char == 'd' || cord_x_char == 'e' || cord_x_char == 'f' || cord_x_char == 'g' || cord_x_char == 'h') {
+                                //print("\nYou Selected %c%i \n", cord_x_char, cord_y_int);
+                                if (cord_x_char >= 'a' && cord_x_char <= 'h') {
+                                    cord_x_int = cord_x_char - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                                }
+                                else {
+                                    print("Something went wrong.\n");
+                                    exit(1);
+                                }
                             }
                             else {
                                 print("Something went wrong.\n");
                                 exit(1);
                             }
-                        }
-                        else {
-                            print("Something went wrong.\n");
-                            exit(1);
-                        }
 
-                        cord_x_int_02 = cord_x_char_02 - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
+                            cord_x_int_02 = cord_x_char_02 - 'a' + 1; // 'a' → 1, 'b' → 2, ... 'h' → 8
 
-                        strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
-                        strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
+                            strcpy_s(pieceID_02, sizeof(pieceID_02), symb_cord[cord_x_int_02][cord_y_int_02][1]);
+                            strcpy_s(piece_Symbol_02, sizeof(piece_Symbol_02), symb_cord[cord_x_int_02][cord_y_int_02][0]);
 
-                        if (strcmp(piece_Symbol_02, piece_Pawn_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Rook_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Bishop_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Knight_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_Queen_Black) == 0 ||
-                            strcmp(piece_Symbol_02, piece_King_Black) == 0) {
+                            if (strcmp(piece_Symbol_02, piece_Pawn_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Rook_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Bishop_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Knight_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_Queen_Black) == 0 ||
+                                strcmp(piece_Symbol_02, piece_King_Black) == 0) {
 
-                            print("you can not move over your own piece!!");
+                                print("you can not move over your own piece!!");
 
-                        }
-                        else {
-                            if (cord_x_int_02 == cord_x_int && cord_y_int_02 == cord_y_int + 1) {
-                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                selectCordValid_02 = 1;
-                            }
-                            else if (cord_x_int_02 == cord_x_int + 1 && cord_y_int_02 == cord_y_int + 1) {
-                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                selectCordValid_02 = 1;
-                            }
-                            else if (cord_x_int_02 == cord_x_int + 1 && cord_y_int_02 == cord_y_int) {
-                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                selectCordValid_02 = 1;
-                            }
-                            else if (cord_x_int_02 == cord_x_int + 1 && cord_y_int_02 == cord_y_int - 1) {
-                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                selectCordValid_02 = 1;
-                            }
-                            else if (cord_x_int_02 == cord_x_int && cord_y_int_02 == cord_y_int - 1) {
-                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                selectCordValid_02 = 1;
-                            }
-                            else if (cord_x_int_02 == cord_x_int - 1 && cord_y_int_02 == cord_y_int - 1) {
-                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                selectCordValid_02 = 1;
-                            }
-                            else if (cord_x_int_02 == cord_x_int - 1 && cord_y_int_02 == cord_y_int) {
-                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                selectCordValid_02 = 1;
-                            }
-                            else if (cord_x_int_02 == cord_x_int - 1 && cord_y_int_02 == cord_y_int + 1) {
-                                move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
-                                selectCordValid_02 = 1;
                             }
                             else {
-                                print("You need to select a valid scuare on the board!!\n");
-                                selectCordValid_02 = 0;
+                                if (cord_x_int_02 == cord_x_int && cord_y_int_02 == cord_y_int + 1) {
+                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                    selectCordValid_02 = 1;
+                                }
+                                else if (cord_x_int_02 == cord_x_int + 1 && cord_y_int_02 == cord_y_int + 1) {
+                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                    selectCordValid_02 = 1;
+                                }
+                                else if (cord_x_int_02 == cord_x_int + 1 && cord_y_int_02 == cord_y_int) {
+                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                    selectCordValid_02 = 1;
+                                }
+                                else if (cord_x_int_02 == cord_x_int + 1 && cord_y_int_02 == cord_y_int - 1) {
+                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                    selectCordValid_02 = 1;
+                                }
+                                else if (cord_x_int_02 == cord_x_int && cord_y_int_02 == cord_y_int - 1) {
+                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                    selectCordValid_02 = 1;
+                                }
+                                else if (cord_x_int_02 == cord_x_int - 1 && cord_y_int_02 == cord_y_int - 1) {
+                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                    selectCordValid_02 = 1;
+                                }
+                                else if (cord_x_int_02 == cord_x_int - 1 && cord_y_int_02 == cord_y_int) {
+                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                    selectCordValid_02 = 1;
+                                }
+                                else if (cord_x_int_02 == cord_x_int - 1 && cord_y_int_02 == cord_y_int + 1) {
+                                    move_piece(cord_x_int, cord_y_int, cord_x_int_02, cord_y_int_02, piece_Symbol, pieceID);
+                                    selectCordValid_02 = 1;
+                                }
+                                else {
+                                    print("You need to select a valid scuare on the board!!\n");
+                                    selectCordValid_02 = 0;
+                                }
                             }
+
                         }
+
                     } while (selectCordValid_02 == 0);
 
                 }
@@ -3812,28 +3849,30 @@ void black_pawn_select_piece(int cord_x, int cord_y) {
         print("Knight: 3    Queen: 4\n");
         scanf(" %i", &select);
 
-        if (select == 1) { // Rook
+        switch (select)
+        {
+        case 1:
             strcpy_s(symb_cord[cord_x][cord_y][0], sizeof(symb_cord[0][0][0]), piece_Rook_Black);
             strcpy_s(symb_cord[cord_x][cord_y][1], sizeof(symb_cord[0][0][0]), "BR00");
             valid = 1;
-        }
-        else if (select == 2) { // Bishop
+            break;
+        case 2:
             strcpy_s(symb_cord[cord_x][cord_y][0], sizeof(symb_cord[0][0][0]), piece_Bishop_Black);
             strcpy_s(symb_cord[cord_x][cord_y][1], sizeof(symb_cord[0][0][0]), "BB00");
             valid = 1;
-        }
-        else if (select == 3) { // Knight
+            break;
+        case 3:
             strcpy_s(symb_cord[cord_x][cord_y][0], sizeof(symb_cord[0][0][0]), piece_Knight_Black);
             strcpy_s(symb_cord[cord_x][cord_y][1], sizeof(symb_cord[0][0][0]), "BN00");
             valid = 1;
-        }
-        else if (select == 4) { // Queen
+            break;
+        case 4:
             strcpy_s(symb_cord[cord_x][cord_y][0], sizeof(symb_cord[0][0][0]), piece_Queen_Black);
             strcpy_s(symb_cord[cord_x][cord_y][1], sizeof(symb_cord[0][0][0]), "BQ00");
             valid = 1;
-        }
-        else {
-            print("\nYou need to select one of the alterantives!!");
+            break;
+        default:
+            break;
         }
 
     } while (valid == 0);
@@ -3841,33 +3880,38 @@ void black_pawn_select_piece(int cord_x, int cord_y) {
 }
 
 void check_king_status() {
+    int counter_valid_white = 0;
+    int counter_valid_black = 0;
 
-    if (
-        strcmp(symb_cord[1][1][0], "[K]") != 0 && strcmp(symb_cord[2][1][0], "[K]") != 0 && strcmp(symb_cord[3][1][0], "[K]") != 0 && strcmp(symb_cord[4][1][0], "[K]") != 0 && strcmp(symb_cord[5][1][0], "[K]") != 0 && strcmp(symb_cord[6][1][0], "[K]") != 0 && strcmp(symb_cord[7][1][0], "[K]") != 0 && strcmp(symb_cord[8][1][0], "[K]") != 0 &&
-        strcmp(symb_cord[1][2][0], "[K]") != 0 && strcmp(symb_cord[2][2][0], "[K]") != 0 && strcmp(symb_cord[3][2][0], "[K]") != 0 && strcmp(symb_cord[4][2][0], "[K]") != 0 && strcmp(symb_cord[5][2][0], "[K]") != 0 && strcmp(symb_cord[6][2][0], "[K]") != 0 && strcmp(symb_cord[7][2][0], "[K]") != 0 && strcmp(symb_cord[8][2][0], "[K]") != 0 &&
-        strcmp(symb_cord[1][3][0], "[K]") != 0 && strcmp(symb_cord[2][3][0], "[K]") != 0 && strcmp(symb_cord[3][3][0], "[K]") != 0 && strcmp(symb_cord[4][3][0], "[K]") != 0 && strcmp(symb_cord[5][3][0], "[K]") != 0 && strcmp(symb_cord[6][3][0], "[K]") != 0 && strcmp(symb_cord[7][3][0], "[K]") != 0 && strcmp(symb_cord[8][3][0], "[K]") != 0 &&
-        strcmp(symb_cord[1][4][0], "[K]") != 0 && strcmp(symb_cord[2][4][0], "[K]") != 0 && strcmp(symb_cord[3][4][0], "[K]") != 0 && strcmp(symb_cord[4][4][0], "[K]") != 0 && strcmp(symb_cord[5][4][0], "[K]") != 0 && strcmp(symb_cord[6][4][0], "[K]") != 0 && strcmp(symb_cord[7][4][0], "[K]") != 0 && strcmp(symb_cord[8][4][0], "[K]") != 0 &&
-        strcmp(symb_cord[1][5][0], "[K]") != 0 && strcmp(symb_cord[2][5][0], "[K]") != 0 && strcmp(symb_cord[3][5][0], "[K]") != 0 && strcmp(symb_cord[4][5][0], "[K]") != 0 && strcmp(symb_cord[5][5][0], "[K]") != 0 && strcmp(symb_cord[6][5][0], "[K]") != 0 && strcmp(symb_cord[7][5][0], "[K]") != 0 && strcmp(symb_cord[8][5][0], "[K]") != 0 &&
-        strcmp(symb_cord[1][5][0], "[K]") != 0 && strcmp(symb_cord[2][6][0], "[K]") != 0 && strcmp(symb_cord[3][6][0], "[K]") != 0 && strcmp(symb_cord[4][6][0], "[K]") != 0 && strcmp(symb_cord[6][6][0], "[K]") != 0 && strcmp(symb_cord[6][6][0], "[K]") != 0 && strcmp(symb_cord[7][6][0], "[K]") != 0 && strcmp(symb_cord[8][6][0], "[K]") != 0 &&
-        strcmp(symb_cord[1][7][0], "[K]") != 0 && strcmp(symb_cord[2][7][0], "[K]") != 0 && strcmp(symb_cord[3][7][0], "[K]") != 0 && strcmp(symb_cord[4][7][0], "[K]") != 0 && strcmp(symb_cord[5][7][0], "[K]") != 0 && strcmp(symb_cord[6][7][0], "[K]") != 0 && strcmp(symb_cord[7][7][0], "[K]") != 0 && strcmp(symb_cord[8][7][0], "[K]") != 0 &&
-        strcmp(symb_cord[1][8][0], "[K]") != 0 && strcmp(symb_cord[2][8][0], "[K]") != 0 && strcmp(symb_cord[3][8][0], "[K]") != 0 && strcmp(symb_cord[4][8][0], "[K]") != 0 && strcmp(symb_cord[5][8][0], "[K]") != 0 && strcmp(symb_cord[6][8][0], "[K]") != 0 && strcmp(symb_cord[7][8][0], "[K]") != 0 && strcmp(symb_cord[8][8][0], "[K]") != 0
-        ) {
+
+    for (int x = 1; x <= 8; x++) {
+        for (int y = 1; y <= 8; y++) {
+            if (strcmp(symb_cord[x][y][0], "[K]") != 0) {
+                counter_valid_white++;
+            }
+        }
+    }
+    if (counter_valid_white == 64) {
         king_true_int = 1;
     }
-    else if (
-        strcmp(symb_cord[1][1][0], " K ") != 0 && strcmp(symb_cord[2][1][0], " K ") != 0 && strcmp(symb_cord[3][1][0], " K ") != 0 && strcmp(symb_cord[4][1][0], " K ") != 0 && strcmp(symb_cord[5][1][0], " K ") != 0 && strcmp(symb_cord[6][1][0], " K ") != 0 && strcmp(symb_cord[7][1][0], " K ") != 0 && strcmp(symb_cord[8][1][0], " K ") != 0 &&
-        strcmp(symb_cord[1][2][0], " K ") != 0 && strcmp(symb_cord[2][2][0], " K ") != 0 && strcmp(symb_cord[3][2][0], " K ") != 0 && strcmp(symb_cord[4][2][0], " K ") != 0 && strcmp(symb_cord[5][2][0], " K ") != 0 && strcmp(symb_cord[6][2][0], " K ") != 0 && strcmp(symb_cord[7][2][0], " K ") != 0 && strcmp(symb_cord[8][2][0], " K ") != 0 &&
-        strcmp(symb_cord[1][3][0], " K ") != 0 && strcmp(symb_cord[2][3][0], " K ") != 0 && strcmp(symb_cord[3][3][0], " K ") != 0 && strcmp(symb_cord[4][3][0], " K ") != 0 && strcmp(symb_cord[5][3][0], " K ") != 0 && strcmp(symb_cord[6][3][0], " K ") != 0 && strcmp(symb_cord[7][3][0], " K ") != 0 && strcmp(symb_cord[8][3][0], " K ") != 0 &&
-        strcmp(symb_cord[1][4][0], " K ") != 0 && strcmp(symb_cord[2][4][0], " K ") != 0 && strcmp(symb_cord[3][4][0], " K ") != 0 && strcmp(symb_cord[4][4][0], " K ") != 0 && strcmp(symb_cord[5][4][0], " K ") != 0 && strcmp(symb_cord[6][4][0], " K ") != 0 && strcmp(symb_cord[7][4][0], " K ") != 0 && strcmp(symb_cord[8][4][0], " K ") != 0 &&
-        strcmp(symb_cord[1][5][0], " K ") != 0 && strcmp(symb_cord[2][5][0], " K ") != 0 && strcmp(symb_cord[3][5][0], " K ") != 0 && strcmp(symb_cord[4][5][0], " K ") != 0 && strcmp(symb_cord[5][5][0], " K ") != 0 && strcmp(symb_cord[6][5][0], " K ") != 0 && strcmp(symb_cord[7][5][0], " K ") != 0 && strcmp(symb_cord[8][5][0], " K ") != 0 &&
-        strcmp(symb_cord[1][5][0], " K ") != 0 && strcmp(symb_cord[2][6][0], " K ") != 0 && strcmp(symb_cord[3][6][0], " K ") != 0 && strcmp(symb_cord[4][6][0], " K ") != 0 && strcmp(symb_cord[6][6][0], " K ") != 0 && strcmp(symb_cord[6][6][0], " K ") != 0 && strcmp(symb_cord[7][6][0], " K ") != 0 && strcmp(symb_cord[8][6][0], " K ") != 0 &&
-        strcmp(symb_cord[1][7][0], " K ") != 0 && strcmp(symb_cord[2][7][0], " K ") != 0 && strcmp(symb_cord[3][7][0], " K ") != 0 && strcmp(symb_cord[4][7][0], " K ") != 0 && strcmp(symb_cord[5][7][0], " K ") != 0 && strcmp(symb_cord[6][7][0], " K ") != 0 && strcmp(symb_cord[7][7][0], " K ") != 0 && strcmp(symb_cord[8][7][0], " K ") != 0 &&
-        strcmp(symb_cord[1][8][0], " K ") != 0 && strcmp(symb_cord[2][8][0], " K ") != 0 && strcmp(symb_cord[3][8][0], " K ") != 0 && strcmp(symb_cord[4][8][0], " K ") != 0 && strcmp(symb_cord[5][8][0], " K ") != 0 && strcmp(symb_cord[6][8][0], " K ") != 0 && strcmp(symb_cord[7][8][0], " K ") != 0 && strcmp(symb_cord[8][8][0], " K ") != 0
-        ) {
+
+    for (int x = 1; x <= 8; x++) {
+        for (int y = 1; y <= 8; y++) {
+            if (strcmp(symb_cord[x][y][0], " K ") != 0) {
+                counter_valid_black++;
+            }
+        }
+    }
+    if (counter_valid_black == 64) {
         king_true_int = 2;
     }
 
+}
 
 
-    }
+void piece_symbol(char piece[3]) {
 
+
+
+    return 0;
+}
