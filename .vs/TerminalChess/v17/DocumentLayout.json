@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{CB83586F-6807-4459-880E-610D003721ED}|TerminalChess\\TerminalChess.vcxproj|solutionrelative:TerminalChess\\chessboard_symbols.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{CB83586F-6807-4459-880E-610D003721ED}|TerminalChess\\TerminalChess.vcxproj|C:\\Users\\theo.lidec\\Desktop\\VS2022\\TerminalChess\\TerminalChess\\chessboard_symbols.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CB83586F-6807-4459-880E-610D003721ED}|TerminalChess\\TerminalChess.vcxproj|solutionrelative:TerminalChess\\chessboard_symbols.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{CB83586F-6807-4459-880E-610D003721ED}|TerminalChess\\TerminalChess.vcxproj|C:\\Users\\theo.lidec\\Desktop\\VS2022\\TerminalChess\\TerminalChess\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{CB83586F-6807-4459-880E-610D003721ED}|TerminalChess\\TerminalChess.vcxproj|solutionrelative:TerminalChess\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
@@ -22,13 +26,13 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "main.c",
               "DocumentMoniker": "C:\\Users\\theo.lidec\\Desktop\\VS2022\\TerminalChess\\TerminalChess\\main.c",
               "RelativeDocumentMoniker": "TerminalChess\\main.c",
               "ToolTip": "C:\\Users\\theo.lidec\\Desktop\\VS2022\\TerminalChess\\TerminalChess\\main.c",
               "RelativeToolTip": "TerminalChess\\main.c",
-              "ViewState": "AQIAAHIAAAAAAAAAAAAAACQAAAADAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAALsAAAAOAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2025-09-03T09:00:43.089Z",
               "IsPinned": true,
@@ -42,10 +46,23 @@
               "RelativeDocumentMoniker": "TerminalChess\\chessboard_symbols.c",
               "ToolTip": "C:\\Users\\theo.lidec\\Desktop\\VS2022\\TerminalChess\\TerminalChess\\chessboard_symbols.c",
               "RelativeToolTip": "TerminalChess\\chessboard_symbols.c",
-              "ViewState": "AQIAACsPAAAAAAAAAAAkwDIPAAANAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2025-09-15T08:52:08.152Z",
               "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "chessboard_symbols.h",
+              "DocumentMoniker": "C:\\Users\\theo.lidec\\Desktop\\VS2022\\TerminalChess\\TerminalChess\\chessboard_symbols.h",
+              "RelativeDocumentMoniker": "TerminalChess\\chessboard_symbols.h",
+              "ToolTip": "C:\\Users\\theo.lidec\\Desktop\\VS2022\\TerminalChess\\TerminalChess\\chessboard_symbols.h",
+              "RelativeToolTip": "TerminalChess\\chessboard_symbols.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-02-04T08:54:25.456Z",
               "EditorCaption": ""
             }
           ]

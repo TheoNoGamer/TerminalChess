@@ -35,6 +35,7 @@ int main(void) {
 
 			randNum = randomNumnumberGen(40); /* define white/black */
 			// print("---- Debug__Debug__ Random number: %i ---- \n", randNum); /* ---- DEBUG ---- */
+
 			if (randNum <= 20) {
 				strcpy(user01_Color, "white"); strcpy(user02_Color, "black");
 				user01_Color_int = 1; user02_Color_int = 2;
@@ -53,9 +54,9 @@ int main(void) {
 			userNamesValid = 0;
 			do {
 				print("The firs user write your name: ");
-				scanf(" %[^\n]", &user01_Name);
+				scanf(" %19[^\n]", &user01_Name);
 				print("Hi %s, now the second user pls write your name: ", user01_Name);
-				scanf(" %[^\n]", &user02_Name);
+				scanf(" %19[^\n]", &user02_Name);
 				 
 				if (strcmp(user01_Name, user02_Name) == 0) {
 					print("\nYou can not have duplicate names! \n\n");
@@ -189,11 +190,11 @@ int main(void) {
 			print("\nDo you whant you go again?\n");
 			print("Write y/n: ");
 			scanf(" %c", &continueAns);
-			if (continueAns == 'n') {
+			if (continueAns == 'n' || continueAns == 'N') {
 				print("Exit");
 				exit(0);
 			}
-			else if (continueAns == 'y') {
+			else if (continueAns == 'y' || continueAns == 'Y') {
 				isDone = 1;
 				print("\n\n\n\n\n\n\n\n");
 				printf("\033[H\033[J");

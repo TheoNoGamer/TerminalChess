@@ -2,8 +2,11 @@
 C:\Users\theo.lidec\Desktop\VS2022\TerminalChess\TerminalChess\chessboard_symbols.c(3784,98): warning C4028: formal parameter 5 different from declaration
 C:\Users\theo.lidec\Desktop\VS2022\TerminalChess\TerminalChess\chessboard_symbols.c(3784,120): warning C4028: formal parameter 6 different from declaration
 C:\Users\theo.lidec\Desktop\VS2022\TerminalChess\TerminalChess\chessboard_symbols.c(3916,13): warning C4098: 'piece_symbol': 'void' function returning a value
+  main.c
+C:\Users\theo.lidec\Desktop\VS2022\TerminalChess\TerminalChess\main.c(78,3): warning C4013: 'init_blank_board_symbols' undefined; assuming extern returning int
+C:\Users\theo.lidec\Desktop\VS2022\TerminalChess\TerminalChess\main.c(134,7): warning C4013: 'init_move_black' undefined; assuming extern returning int
   Generating code
-  3 of 19 functions (15.8%) were compiled, the rest were copied from previous compilation.
+  1 of 19 functions ( 5.3%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     2 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
